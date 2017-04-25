@@ -1,0 +1,104 @@
+<!--main sub page heading-->
+<section id="page-head">
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="page-heading">
+                <h1>LIÊN HỆ VỚI CHÚNG TÔI</h1>
+            </div>
+        </div>
+    </div>
+</section><!--end main page heading-->
+<!--Detail -->
+<section id="detail">
+    <div class="container">
+        <?php if ($this->errors): ?>
+            <div class="alert alert-block alert-danger fade in">
+                <button class="close close-sm" type="button" data-dismiss="alert">
+                    <i class="fa fa-times-circle"></i>
+                </button>
+                <h4><i class="fa fa-exclamation-triangle"></i> Lỗi!</h4>
+                <?php foreach ($this->errors as $error): ?>
+                    <p> - <?php echo $error; ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php
+        if ($this->success):
+            ?>
+            <div class="alert alert-success alert-block fade in">
+                <button class="close close-sm" type="button" data-dismiss="alert">
+                    <i class="fa fa-times-circle"></i>
+                </button>
+                <h4><i class="fa fa-thumbs-o-up"></i> Hoàn tất!</h4>
+                <p>- <?php echo $this->success; ?></p>
+            </div>
+        <?php endif; ?>
+
+        <div class="row" style="margin-bottom: 20px">
+            <div id="form">
+                <form method="post">
+                    <?php if (!CUSTOMER_ID): ?>
+                        <div class="row input-pad">
+                            <div class="col-md-6">
+                                <span class="fa fa-text-height form-control-feedback"></span>
+                                <input class="form-control" type="text" name="name" placeholder="Ex : Nguyễn Văn A">
+                            </div>
+                            <div class="col-md-6">
+                                <span class="fa fa-envelope-o form-control-feedback"></span>
+                                <input class="form-control" type="email" name="email" placeholder="Ex : abcxyz@gmail.com">
+                            </div>
+                        </div>
+                        <div class="row input-pad">
+                            <div class="col-md-6">
+                                <span class="fa fa-phone form-control-feedback"></span>
+                                <input class="form-control" type="text" name="phone" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="row input-pad">
+                        <div class="col-md-12">
+                            <span class="fa fa-book form-control-feedback"></span>
+                            <input class="form-control" type="text" name="subject" placeholder="Nhập tiêu đề">
+                        </div>
+                    </div>
+                    <div class="row input-pad">
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="contact_content"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row input-pad" style="padding: 20px">
+                        <div class="col-md-2 col-xs-4">
+                            <image class="img-captcha form-control" src="" style="height: 50px">
+                        </div>
+                        <div class="col-md-1 col-xs-1 text-center">
+                            <a data-toggle="tooltip" class="refresh-captcha" title="Lấy mã xác nhận mới"><i class="fa fa-2x fa-refresh"></i></a>
+                        </div>
+                        <div class="col-md-9 col-xs-7">
+                            <input type="text" name="captcha" class="form-control" placeholder="Nhập mã xác nhận">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!--map-->
+                    <div class="row input-pad">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-success" type="submit">Gửi liên hệ</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section><!--end details-->
+<script>
+    General.addContat();
+    tinymce.init({
+        selector: 'textarea',
+        width: "300",
+        height: "200",
+        plugins: "image imagetools,textcolor",
+        toolbar: 'fontsizeselect,image,forecolor backcolor',
+        fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt'
+    });
+</script>

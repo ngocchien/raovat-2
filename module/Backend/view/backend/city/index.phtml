@@ -1,0 +1,124 @@
+<?php
+$arrAreaType = \My\Shipping\Domestic::listAreaType();
+//print_r($arrAreaType);die;
+?>
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+            <h4><i class="icon-remove-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-city')->getMessages(), $this->flashMessenger()->setNamespace('success-edit-city')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+            <h4><i class="icon-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <div class="row" id="frmAddCity">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header id="frmTitle" class="panel-heading">Thêm Tỉnh / Thành</header>
+                <div class="panel-body">
+                    <form id="frm" role="form" class="form-horizontal tasi-form" method="POST">
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 control-label"> Tên Tỉnh / Thành</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <input class="form-control" type="text" name="cityName" value="<?php echo $this->params['cityName'] ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 control-label"> Thuộc vùng :</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <select name="areaID" class="form-control">
+                                    <?php foreach ($arrAreaType as $areaID => $areaName): ?>
+                                        <option value="<?php echo $areaID; ?>"><?php echo $areaName; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 control-label"> Sắp xếp :</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <input class="form-control" type="text" name="ordering" value="<?php echo $this->params['city_ordering'] ? $this->params['city_ordering'] : 0; ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 control-label"> Độ ưu tiên :</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <input class="form-control" type="text" name="isFocus" value="<?php echo $this->params['isFocus'] ? $this->params['isFocus'] : 0; ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10 col-md-10 col-sm-10">
+                                <button type="submit" class="btn btn-success"  id="done" ><i class="icon-save"></i> Hoàn tất</button>
+                                <button class="btn btn-danger" id="cancel" type="button"><i class="icon-refresh"></i> Hủy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">Danh sách Tỉnh / Thành</header>
+                <div class="panel-body">
+                    <section id="flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed cf">
+                            <thead class="cf">
+                                <tr>
+                                    <th class="text-center"><i class="icon-list"></i> ID</th>
+                                    <th>Tên Tỉnh / Thành</th>
+                                    <th class="numeric text-center">Thuộc vùng</th>
+                                    <th class="numeric text-center">Sắp xếp</th>
+                                    <th class="numeric text-center">Ưu tiên</th>
+                                    <th class="numeric text-center">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if ($this->arrCityList):
+                                    foreach ($this->arrCityList as $arrCity):
+                                        ?>
+                                        <tr>
+                                            <td class="text-center" width="80"><?php echo $arrCity['city_id']; ?></td>
+                                            <td class="cityName"><?php echo $arrCity['city_name']; ?></td>
+                                            <td class="numeric areaID"><?php echo $arrCity['city_area_id']; ?></td>
+                                            <td class="numeric ordering"><?php echo $arrCity['city_ordering']; ?></td>
+                                            <td class="numeric isFocus"><?php echo $arrCity['city_is_focus']; ?></td>
+                                            <td class="numeric text-center" width="200">
+                                                <a  href="javascript:;"  class="btn btn-primary btn-xs  edit" data-placement="top" data-original-title="Sửa Tỉnh / Thành"  data-id="<?php echo $arrCity['city_id']; ?>"><i class="icon-pencil"></i> Sửa</a>
+                                                <a  href="javascript:;"   class="btn btn-danger btn-xs delete" data-placement="top" data-original-title="Xóa Tỉnh / Thành" data-id="<?php echo $arrCity['city_id']; ?>"><i class="icon-trash "></i> Xóa</a>                                           
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="5">Hiện tại chưa có dữ liệu.</td></tr>
+                                <?php endif ?>
+                            </tbody>
+                        </table>
+                    </section>
+                    <?php echo $this->paging; ?>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    City.index();
+</script>

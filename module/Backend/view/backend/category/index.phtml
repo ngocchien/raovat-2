@@ -1,0 +1,84 @@
+<?php
+$arrCategoryList = $this->arrCategoryList;
+$arrUserList = $this->arrUserList;
+?>
+<section class="wrapper site-min-height">
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            List Category
+        </header>
+        <div class="panel-body">    
+            <div class="adv-table editable-table ">  
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">                  
+                        <div id="editable-sample_length" class="dataTables_length no-padding">
+                            <a class="btn btn-primary" href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'add')); ?>" ><i class="icon-plus-sign-alt"></i> Add</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <form id="frm" class="form-horizontal" role="form" method="GET">
+                            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-4 no-padding-right">
+                                <button type="submit"  class="btn btn-white per-100" ><i class="icon-search"></i> Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <section id="unseen">
+                    <table class="table table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                            <tr>
+                                <th class="text-center"><i class="icon-list"></i> ID</th>
+                                <th class="text-center"><i class="icon-sort-by-alphabet"></i> Name</th>
+                                <th class="text-center"><i class="icon-calendar"></i> Created date</th>
+                                <th class="text-center"><i class="icon-user"></i> User created</th>
+                                <th class="text-center"><i class="icon-check"></i> Status</th>
+                                <th class="text-center"><i class="icon-edit"></i> Setting</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (!empty($arrCategoryList)):
+                                foreach ($arrCategoryList as $arrCategory):
+                                    ?>
+                                    <tr>
+                                        <td  class="text-center" width="80">
+                                            <?php echo $arrCategory['cate_id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($arrCategory['parent_id'] == 0) {
+                                                echo '<a><b>' . $arrCategory['cate_name'] . '</b></a>';
+                                            } else {
+                                                $temp = substr_count($arrCategory['cate_grade'], ':');
+                                                echo str_repeat('&nbsp;&nbsp;&nbsp;', $temp);
+                                                echo '&#x21b3;&nbsp;&nbsp;';
+                                                echo '<a><b>' . $arrCategory['cate_name'] . '</b></a>';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td class="text-center"><?php echo date('d/m/Y', $arrCategory['created_date']); ?> </td>
+                                        <td class="text-center"><?php echo $arrUserList[$arrCategory['user_created']]['user_fullname']; ?></td>
+                                        <td class="text-center" width="100"><?php echo $arrCategory['cate_status'] ? '<a href="javascript:;" data-toggle="tooltip" title="Hiện"><i class="icon-ok color-success"></i></a>' : ' <a href="javascript:;" data-toggle="tooltip" title="Ẩn"><i class="icon-minus-sign color-danger"></i></a>'; ?></td>
+                                        <td class="text-center" width="110">
+                                            <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'edit', 'id' => $arrCategory['cate_id'])); ?>"  class="btn btn-primary btn-xs  edit" data-toggle="tooltip" title="Sửa"><i class="icon-pencil"></i></a>
+                                            <a  class="btn btn-danger btn-xs remove" data-toggle="tooltip" title="Xóa" rel="<?php echo $arrCategory['cate_id']; ?>"><i class="icon-trash "></i></a>
+                                        </td>
+                                    </tr>
+
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="6" class="text-center">Hiện tại chưa có danh mục nào.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <div>
+                <?php echo $this->paging; ?>
+            </div>
+        </div>
+    </section>
+</section>
+<script type="text/javascript">
+    Category.index();
+</script>

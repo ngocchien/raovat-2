@@ -1,0 +1,29 @@
+<?php
+$arr_general = $this->arr_general
+?>
+
+<!--main sub page heading-->
+<section id="page-head">
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="page-heading">
+                <h1><?php echo $arr_general['gene_title'] ?></h1>
+            </div>
+        </div>
+    </div>
+</section><!--end main page heading-->
+<!--Detail -->
+<section id="detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="page-content">
+                    <?php echo $arr_general['gene_content']; ?>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <?php echo $this->render('frontend/nav-ads-right'); ?>
+            </div>
+        </div>
+    </div>
+</section><!--end details-->

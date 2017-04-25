@@ -1,0 +1,76 @@
+<section class="wrapper site-min-height">
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <?php if ($this->arrUser['user_gender'] == 1) : ?>
+                            <img src = "<?php echo STATIC_URL . '/b/img/no_avatar_male.jpg' ?>">
+                        <?php else : ?>
+                            <img src = "<?php echo STATIC_URL . '/b/img/no_avatar_female.jpg' ?>">
+                        <?php endif; ?>
+                    </a>
+                    <h1><?php echo $this->arrUser['user_fullname']
+                        ?></h1>
+                    <p><?php echo $this->arrUser['user_email'] ?></p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'view', 'id' => $this->arrUser['user_id'])); ?>"> <i class="fa fa-user"></i>Thông tin tài khoản</a>
+                    </li>
+                    <li class="<?php echo $this->params['action'] === 'recent' ? 'active' : ''; ?>">
+                        <a href="#"> <i class="fa fa-calendar"></i> Hoạt động gần đây <span class="label label-danger pull-right r-activity">9</span></a>
+                    </li>
+                    <li class="<?php echo $this->params['action'] === 'edit' ? 'active' : ''; ?>">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'edit', 'id' => $this->arrUser['user_id'])); ?>"> <i class="fa fa-edit"></i>Chỉnh sửa  thông tin tài khoản</a>
+                    </li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+            <section class="panel">
+                <div class="panel-body bio-graph-info">
+                    <h1>Thông tin người dùng</h1>
+                    <div class="row">
+                        <div class="bio-row">
+                            <p><span style="text-decoration:underline;">Họ và tên </span>: <?php echo $this->arrUser['user_fullname'] ?></p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span style="text-decoration:underline;">Giới tính </span>: <?php echo My\General::getGender()[$this->arrUser['user_gender']] ?></p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span style="text-decoration:underline;">Ngày sinh </span>: <?php echo date("d/m/Y", $this->arrUser['user_birthday']) ?></p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span style="text-decoration:underline;">Email </span>: <?php echo $this->arrUser['user_email'] ?></p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span style="text-decoration:underline;">Số điện thoại </span>:  <?php echo $this->arrUser['user_phone'] ?></p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span style="text-decoration:underline;">Ngày đăng kí </span>:  <?php echo date('d-m-Y', ($this->arrUser['created_date'])); ?></p>
+                        </div>
+                        <div class="bio-row">
+                            <p>
+                                <span style="text-decoration:underline;">Trạng thái </span>: 
+                                <?php if ($this->arrUser['user_status'] == 1) : ?>
+                                    <span class="label label-primary" style="width:90px;">Đang hoạt động</span>
+                                <?php else : ?>
+                                    <span class ="label label-danger" style = "width:90px;">Đang Block</span>
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                        <div class="bio-row">
+                            <p>
+                                <span style="text-decoration:underline;">Thuộc Nhóm </span>:
+                                <span class="label label-default" style="<?php echo isset($this->arrGroup["group_css"]) ? $this->arrGroup["group_css"] : ""; ?>" style="width:90px;"><?php echo isset($this->arrGroup["group_name"]) ? $this->arrGroup["group_name"] : "Không xác định"; ?></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</section>

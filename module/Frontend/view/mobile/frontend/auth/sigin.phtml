@@ -1,0 +1,34 @@
+<div id="brcmb">
+    <a href="#"><span>Đăng Nhập</span></a>
+</div>
+<div id="cont">
+
+    <?php if ($this->errors): ?>
+        <div class="" style="border: 1px #3cc051 solid; color: #D32929; font-size: 22px">
+            <h4 style="text-align: center"> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <form method="POST" >
+        <div class="ls-pro">               
+            <div class="step-one">
+                <div class="chil2">
+                    <div style="width: 90%; margin: 20px auto">
+                        Email hoặc Tài khoản<br/> 
+                        <input class="input" type="text" name="strUsername" placeholder="Email">
+                    </div>
+
+                    <div style="width: 90%; margin: 20px auto">
+                        Mật khẩu <br/>
+                        <input class="input" type="password" name="strPassWord" placeholder="Mật khẩu"><br/>
+                        <a href="#" class="f-r cr-blue">Quên mật khẩu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="button"><button class="readmore">Đăng Nhập</button></div>
+        </div>
+    </form>
+</div>

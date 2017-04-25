@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="html">
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=0.5">
+        <!-- CSS -->
+        <?php   
+                echo $this->headTitle();
+                echo $this->headMeta();
+                echo $this->headLink();
+                echo $this->headScript();
+        ?>
+        <script>
+            var showcartURL = '<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'show-cart')); ?>';
+            var profile_changecitytUrl = '<?php echo $this->serverUrl() . $this->Url('profile', array('controller' => 'profile', 'action' => 'changecity')); ?>';
+            var viewCartURL = '<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'view-cart'))?>';
+        </script>
+    </head>
+    <body>
+        <?php 
+            echo $this->render('frontend/topbar');
+            echo $this->layout()->content;
+            echo $this->render('frontend/footer');
+        ?>
+    </body>
+</html>

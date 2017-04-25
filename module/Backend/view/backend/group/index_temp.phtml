@@ -1,0 +1,83 @@
+<section class="wrapper site-min-height">
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Danh sách nhóm
+                </header>
+                <div class="panel-body">
+                    <div id="frmFilterUser" class="panel-body" style="<?php echo $this->isFilter ? 'display:block;' : 'display:none;' ?>;">
+                        <form id="frm" class="form-horizontal" role="form" method="GET">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:20%;font-weight:600;">Tên nhóm</td>
+                                        <td>
+                                            <input id="fullname" type="text" name="group_name" class="form-control" placeholder="Nhập tên nhóm" value="<?php echo $this->params['group_name'] ? $this->params['group_name'] : ''; ?>">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="<?php echo $this->serverUrl() . $this->url('backend', array('controller' => 'user', 'action' => 'index')); ?>" class="btn btn-danger">Bỏ tìm kiếm</a>
+                            <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <section id="flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed cf">
+                            <thead class="cf">
+                                <tr>
+                                    <th>Tên nhóm</th>
+                                    <th style="text-align:center;">Ngày tạo</th>
+                                    <th style="text-align:center;">Ngày chỉnh sửa</th>
+                                    <th style="text-align:center;">Trang thái</th>
+                                    <th style="text-align:center;">Phân quyền</th>
+                                    <th style="text-align:center;">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if ($this->arrGroupList):
+                                    foreach ($this->arrGroupList as $arrGroup):
+                                        ?>
+
+                                        <tr>
+                                            <td>
+                                                <a class="tooltips" data-placement="top" data-original-title="Xem thông tin người dùng" href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'view', 'id' => $arrGroup['group_id'])); ?>">
+                                                    <?php echo $arrGroup['grou_name']; ?>
+                                                </a>
+                                            </td>
+                                            <td class="text-center"><?php echo date('d/m/Y H:i', $arrGroup['grou_created']); ?></td>
+                                            <td class="text-center"><?php echo date('d/m/Y H:i', $arrGroup['grou_updated']); ?></td>
+                                            <td class="text-center" width="100"><?php echo $arrGroup['grou_status'] ? '<a href="javascript:;" class="tooltips" data-placement="top" data-original-title="Hoạt động"><i class="icon-ok color-success"></i></a>' : ' <a href="javascript:;" class="tooltips" data-placement="top" data-original-title="Đã khóa"><i class="icon-minus-sign color-danger"></i></a>'; ?></td>
+                                            <td class="text-center" width="200">
+                                                <?php if ($arrGroup['is_fullaccess'] == 0): ?>
+                                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'permission', 'action' => 'grant', 'gid' => $arrGroup['grou_id'])); ?>" class="icon-lock tooltips edit" data-placement="top" data-original-title="Phân quyền"></a>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="text-center" width="200">
+                                                <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'edit', 'id' => $arrGroup['grou_id'])); ?>" class="icon-pencil tooltips edit" data-placement="top" data-original-title="Sửa thông tin"></a>
+                                                <a class="icon-times-circle tooltips remove" data-placement="top" data-original-title="Xóa nhóm" rel="<?php echo $arrGroup['grou_id'] ?>"></a>
+                                            </td>
+                                        </tr>
+
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="6" style="text-align:center;">Hiện tại chưa có người dùng nào.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+                <div style="padding-top: 15px;">
+                    <?php echo $this->paging; ?>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    Group.del();
+</script>

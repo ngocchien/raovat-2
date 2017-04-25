@@ -1,0 +1,24 @@
+<?php
+$arrTemplate = $this->arrTemplateList;
+$arrListCategoryParent = $this->arrListCategoryParent;
+?>
+<div id="cont">
+    <?php
+    foreach ($arrTemplate as $key => $template) :
+        $this->template = $template;
+        echo $this->render('frontend/index/template_' . $template['template']);
+    endforeach;
+    ?>
+    <div class="ls-cat">
+        <div class="tt" href="#box-ca">Tất Cả Danh Mục</div>
+                <?php if (!empty($arrListCategoryParent)) : ?>
+            <div class="ls">
+                <ul>
+            <?php foreach ($arrListCategoryParent as $key => $value): ?>
+                        <li><a href="<?php echo $this->serverUrl() . $this->Url('category', array('controller' => 'category', 'action' => 'index', 'categorySlug' => $value["cate_slug"], 'categoryID' => $value["cate_id"])) ?>"><?php echo $value['cate_name']; ?></a></li>
+            <?php endforeach; ?>
+                </ul>
+            </div>
+    <?php endif; ?>
+    </div>
+</div>

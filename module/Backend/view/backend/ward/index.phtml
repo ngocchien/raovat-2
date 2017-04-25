@@ -1,0 +1,145 @@
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-ward')->getMessages(), $this->flashMessenger()->setNamespace('success-edit-ward')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <div class="row" id="frmAddWard">
+        <div class="col-lg-12">
+            <section class="panel panel-primary">
+                <header class="panel-heading">Thêm Phường / Xã</header>
+                <div class="panel-body">
+                    <form id="frm" role="form" class="form-horizontal tasi-form" method="POST">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"> Tên Phường / Xã</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="wardName" value="<?php echo $this->params['wardName'] ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Thuộc Tỉnh / TP :</label>
+                            <div class="col-lg-10">
+                                <select name="city_id" id="city_id" class="form-control m-bot15"> 
+                                    <option value="0">===== Chọn Tỉnh/ Thành =====</option>
+
+                                    <?php
+                                    if (count($this->arrCityList) > 0):
+                                        foreach ($this->arrCityList as $arrCityList):
+                                            $city_id = $arrCityList['city_id'];
+                                            $city_name = $arrCityList['city_name'];
+                                            ?>
+                                            <option value="<?php echo $city_id ?>"><?php echo $city_name ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div><div class="form-group">
+                            <label class="col-lg-2 control-label">Thuộc Quận/ Huyện :</label>
+                            <div class="col-lg-10">
+                                <select name="district_id" id="district_id" class="form-control m-bot15"> 
+                                    <option value="0">===== Chọn Quận / Huyện =====</option>
+                                    <?php //json_decode($this->data,true); ?>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"> Sắp xếp :</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="ordering" value="<?php echo $this->params['ordering'] ? $this->params['ordering'] : 0; ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"> Độ ưu tiên :</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="isFocus" value="<?php echo $this->params['isFocus'] ? $this->params['isFocus'] : 0; ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button class="btn btn-info" id="done" type="button">Hoàn tất</button>
+                                <button class="btn btn-danger" id="cancel" type="button">Hủy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel panel-primary">
+                <header class="panel-heading">Danh sách Quận / Huyện
+                    <span class="tools pull-right" style="margin-right:10px;">   
+                        <select name="district_id" id="district_id" class="form-control valid" style="margin-top:-5px;">
+                            <option value="0">===== Chọn Quận / Huyện =====</option>
+                        </select>
+                    </span>
+                    <span class="tools pull-right" style="margin-right:10px;">   
+                        <select class="form-control valid" style="margin-top:-5px;" name="city_id" id="city_id">
+                            <option value="0">==== Chọn Tỉnh / Thành ====</option>
+                            <?php if (count($this->arrCityList) > 0): ?>
+                                <?php foreach ($this->arrCityList as $arrCityList): ?>
+                                <?php
+                                    $city_id = $arrCityList['city_id'];
+                                    $city_name = $arrCityList['city_name'];
+                                ?>
+                                    <option value="<?php echo $city_id ?>"><?php echo $city_name ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </span>
+                </header>
+
+                <div class="panel-body">
+
+                    <section id="flip-scroll">
+                        <table class="table table-bordered table-striped table-condensed cf">
+                            <thead class="cf">
+                                <tr>
+                                    <th style="text-align:center;">ID</th>
+                                    <th>Tên Quận / Huyện</th>
+                                    <th class="numeric" style="text-align:center;">Sắp xếp</th>
+                                    <th class="numeric" style="text-align:center;">Ưu tiên</th>
+                                    <th class="numeric" style="text-align:center;">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ward-container">
+                                <tr>
+                                    <td colspan="5" style="text-align: center;">Chọn Tỉnh / Thành Phố ,Quận / Huyện cần xem </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <?php echo $this->paging; ?>
+                </div>
+            </section>
+        </div>
+        <div id="paginator" style="padding-top: 15px;">
+            <?php //echo $this->paging('backend', 'district', 'index', $this->total, $this->page, $this->limit, 'backend'); ?>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    Ward.index();
+</script>

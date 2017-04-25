@@ -1,0 +1,34 @@
+<div id="brcmb">
+        <?php if(count($this->arrCateGradeList) > 0):
+            foreach($this->arrCateGradeList as $key=>$value):
+        ?>
+        <a href="<?php echo $this->serverUrl() . $this->Url('content', array('controller' => 'content', 'action' => 'index', 'categorySlug' => $value["cate_slug"], 'categoryID' => $value["cate_id"])) ?>"><span><?php echo $value['cate_name']; ?></span></a> > 
+        <?php endforeach;endif;?>
+    <span><?php echo $this->DetaiContent['cont_title']; ?></span>
+</div>
+<div id="cont">            
+    <div class="dt-pro">
+        <div class="hedr">
+            <div class="h">
+                <h1>
+                    <?php echo ucfirst($this->DetaiContent['cont_title']); ?>
+                </h1>
+            </div>
+            <div class="dt-p">
+                <div class="tt"><?php echo $this->DetaiContent['cont_summary']; ?></div>
+                <?php echo $this->DetaiContent['cont_content']; ?>
+            </div>
+            <?php if($this->arrListContent):?>
+            <div>
+                <ul>
+                    <?php foreach($this->arrListContent as $key=>$value):?>
+                    <li>
+                        <a class="cr-bl" href="<?php echo $this->serverUrl() . $this->Url('content_detail', array('controller' => 'content', 'action' => 'view', 'contslug' => $value["cont_slug"], 'contId' => $value["cont_id"])) ?>"><?php echo ucfirst($value['cont_title']);?></a>
+                    </li>
+                    <?php endforeach;?>
+                </ul>
+            </div
+            <?php endif;?>
+        </div>
+    </div>
+</div>

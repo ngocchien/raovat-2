@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Truy cập bị từ chối!!!</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL . '/b/css/bootstrap.min.css'; ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL . '/b/css/bootstrap-reset.css'; ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL . '/b/css/font-awesome.min.css'; ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL . '/b/css/style.css'; ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo STATIC_URL . '/b/css/style-responsive.css'; ?>">
+        <style>body, p.page-404{font-family:"Times New Roman",Georgia,Serif !important;font-size:22px;}</style>
+    </head>
+    <body class="body-404">
+        <div class="container">
+            <section class="error-wrapper" style="margin-top:5%;">
+                <div style="height:100%;">
+                    <img src="<?php echo STATIC_URL . '/b/images/access-denied.png'; ?>" />
+                </div>
+                <div style="margin-top:70px;">
+                    <h1>403</h1>
+                    <h2>Truy cập bị từ chối</h2>
+                    <p class="page-404">Đây là khu vực riêng tư dành cho nhà phát triển. Bạn không có quyền truy xuất vào đây.</p>
+                    <p><a id="btnBack" class="btn btn-shadow btn-danger" type="button"></a></p>
+                </div>
+
+            </section>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var button = document.getElementById('btnBack');
+        if (document.referrer === '') {
+            button.innerHTML = 'Quay về trang chủ';
+            button.removeAttribute('onclick');
+            button.setAttribute('href', 'http://megavita.vn');
+        } else {
+           
+            button.innerHTML = 'Quay về trang trước';
+            button.setAttribute('href', 'http://megavita.vn');
+        }
+    </script>
+</html>

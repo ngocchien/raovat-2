@@ -1,0 +1,46 @@
+<?php
+$paramsRouter = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch()->getParams();
+$routeName = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+$controller = $paramsRouter['__CONTROLLER__'];
+$action = $paramsRouter['action'];
+?>
+<div id="header" class="clearfix">
+    <div id="toplink">
+        <ul class="social">
+            <li><a href='<?php echo \My\General::SOCIAL_FACEBOOK_URL; ?>' class="icon facebook"
+                   target="_blank">facebook</a></li>
+        </ul>
+    </div>
+    <div class="headerleft"><a href="<?php echo $this->serverUrl() . $this->Url('home') ?>" id="logo"
+                               title="<?php echo \My\General::SITE_AUTH; ?>"><?php echo \My\General::SITE_AUTH; ?></a>
+    </div>
+    <div id="searchBox">
+
+        <form action="<?php echo $this->serverUrl() . $this->Url('search') ?>" id="cse-search-box">
+            <input class="q" type="text" name="keyword" size="55" placeholder="Nhập từ khoá cần tìm kiếm"
+                   value="<?php echo KEYWORD_SEARCH; ?>"/>
+            <input class="asearch" type="submit" value="Search"/>
+        </form>
+    </div>
+</div>
+
+<div id="mainmenu" class="clearfix">
+    <ul id="topnav" class="navigation clearfix">
+        <li class="item all">
+            <a href="<?php echo $this->serverUrl() . $this->Url('home') ?>"><img
+                    src="<?php echo STATIC_URL; ?>/f/v1/photos/icons/home.png"/> Trang chủ</a>
+        </li>
+        <?php foreach (unserialize(ARR_CATEGORY_PARENT) as $arr_category):
+            if ($arr_category['cate_id'] == 25) {
+                continue;
+            }
+            ?>
+            <li class="item  tax-<?php echo $arr_category['cate_slug']; ?>">
+                <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category['cate_slug'], 'cateId' => $arr_category['cate_id']]) ?>'>
+                    <img src="<?php echo STATIC_URL . $arr_category['cate_img_url']; ?>"/>
+                    <?php echo $arr_category['cate_name'] ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>

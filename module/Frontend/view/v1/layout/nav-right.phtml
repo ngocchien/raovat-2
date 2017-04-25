@@ -1,0 +1,66 @@
+<div class="sidebar">
+    <div id="adrighttop" class="adbox">
+        <div id="adsense_right">
+            <!-- khampha.tech -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9166980393030854"
+                 data-ad-slot="3530466045"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <div class="listbox highlight">
+        <div class="list-title">Tiêu điểm</div>
+        <ul>
+            <?php foreach (unserialize(ARR_CONTENT_HOT_LIST) as $arr_content): ?>
+                <li class="list-item">
+                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $arr_content['cont_slug'], 'contentId' => $arr_content['cont_id']]) ?>">
+                        <img src="<?php echo $arr_content['cont_main_image'] ?>"
+                             alt="<?php echo $arr_content['cont_title'] ?>"/>
+                        <?php echo $arr_content['cont_title'] ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <div id="adrightsecond" class="adbox">
+
+    </div>
+    <style>
+        @media (max-width: 639px) {
+            #sticky.adbox {
+                display: none;
+            }
+        }
+    </style>
+    <!--    <div id="sticky" class="adbox">-->
+    <!--        <!-- Khampha 300x600 -->
+    <!--        <ins class="adsbygoogle"-->
+    <!--             style="display:inline-block;width:300px;height:600px"-->
+    <!--             data-ad-client="ca-pub-4608570842050780"-->
+    <!--             data-ad-slot="8985303150"></ins>-->
+    <!--        <script>-->
+    <!--            (adsbygoogle = window.adsbygoogle || []).push({});-->
+    <!--        </script>-->
+    <!--    </div>-->
+    <!--    <div class="listitems">-->
+    <!--        <div class="title">Xu hướng Từ khoá</div>-->
+    <!--        <ul>--><?php
+    //            foreach (unserialize(ARR_KEYWORD_ALL_PAGE) as $arr_key):
+    //                ?>
+    <!--                <li>-->
+    <!--                    <a href="-->
+    <?php //echo $this->serverUrl() . $this->Url('keyword', array('keySlug' => $arr_key['key_slug'], 'keyId' => $arr_key['key_id'])) ?><!--">-->
+    <!--                        --><?php //echo $arr_key['key_name']; ?>
+    <!--                    </a>-->
+    <!--                </li>-->
+    <!--            --><?php //endforeach;
+    //            ?>
+    <!--        </ul>-->
+    <!--    </div>-->
+</div>

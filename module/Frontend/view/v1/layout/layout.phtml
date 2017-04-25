@@ -1,0 +1,74 @@
+<?php
+$paramsRouter = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch()->getParams();
+$routeName = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+$controller = $paramsRouter['__CONTROLLER__'];
+$action = $paramsRouter['action'];
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <?php echo $this->headTitle(); ?>
+    <meta http-equiv="REFRESH" content="1200"/>
+    <link rel="shortcut icon" href="<?php echo STATIC_URL; ?>/uploads/favicon.ico" type="image/x-icon"/>
+    <?php
+    echo $this->headMeta();
+    ?>
+    <meta name="google-site-verification" content="nR7s1ipFYfeFwnVHHtMj-pEGtmSVMcxDBHHsz77Yiw0"/>
+    <meta name="msvalidate.01" content="88663078764AEE951DF480C6F0D3A9F0"/>
+<!--    --><?php //if ($controller == 'content' && $action == 'detail'): ?>
+<!--        <meta name="robots" content="NOINDEX, FOLLOW"/>-->
+<!--    --><?php //else: ?>
+        <meta name="robots" content="INDEX, FOLLOW"/>
+<!--    --><?php //endif; ?>
+    <meta content="<?php echo \My\General::SITE_AUTH ?>" property="og:site_name"/>
+    <meta name="fb:pages" content="158207711302448"/>
+    <script>var social_url = "<?php echo \My\General::SOCIAL_FACEBOOK_URL;?>";
+        window.fbAsyncInit = function () {
+            FB.init({appId: "654662148043081", xfbml: !0, version: "v2.8"})
+        }, function (e, n, t) {
+            var a, c = e.getElementsByTagName(n)[0];
+            e.getElementById(t) || (a = e.createElement(n), a.id = t, a.src = "//connect.facebook.net/en_US/sdk.js", c.parentNode.insertBefore(a, c))
+        }(document, "script", "facebook-jssdk"), function (e, n, t, a, c, o, s) {
+            e.GoogleAnalyticsObject = c, e[c] = e[c] || function () {
+                    (e[c].q = e[c].q || []).push(arguments)
+                }, e[c].l = 1 * new Date, o = n.createElement(t), s = n.getElementsByTagName(t)[0], o.async = 1, o.src = a, s.parentNode.insertBefore(o, s)
+        }(window, document, "script", "https://www.google-analytics.com/analytics.js", "ga"), ga("create", "UA-85211189-1", "auto"), ga("send", "pageview");</script>
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        {
+            lang: 'vi'
+        }
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!--    <script type="application/ld+json">-->
+    <!--            {-->
+    <!--            "@context": "http://schema.org",-->
+    <!--            "@type": "Organization",-->
+    <!--            "url": "--><?php //echo $this->serverUrl(); ?><!--"-->
+    <!--            }-->
+    <!---->
+    <!--    </script>-->
+
+    <?php
+    echo $this->headLink();
+    ?>
+</head>
+<body>
+<div id="page">
+    <!-- render header -->
+    <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/header')); ?>
+    <div id="main" class="indexpage clearfix">
+        <!-- render content -->
+        <?php echo \My\Minifier\HtmlMin::minify($this->layout()->content); ?>
+        <!-- render nav-right -->
+        <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/nav-right')); ?>
+        <!-- render nav-left -->
+        <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/nav-left')); ?>
+    </div>
+    <!-- render nav-footer -->
+    <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/footer')); ?>
+</div>
+</body>
+<?php echo $this->headScript(); ?>
+</html>

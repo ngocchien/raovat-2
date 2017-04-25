@@ -1,0 +1,59 @@
+<div class="content">
+    <h1>Danh sách từ khoá</h1>
+    <div class="taxdesc">
+    </div>
+    <div class="breadcrumbs info-detail" xmlns:v="http://rdf.data-vocabulary.org/#">
+        <span class="first breadcrumb">
+            <a href="<?php echo BASE_URL; ?>">🏠</a>
+        </span>
+        <span typeof="v:Breadcrumb" class="breadcrumb">
+            <a rel="v:url" property="v:title"
+               href="<?php echo $this->serverUrl() . $this->Url('list-keyword') ?>">
+                Danh sách từ khoá
+            </a>
+        </span>
+    </div>
+    <div id="adindexcenter" class="adbox" style="margin-bottom:20px">
+        <!-- khampha content -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-9166980393030854"
+             data-ad-slot="3530466045"
+             data-ad-format="auto"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    <div class="listitems">
+        <ul>
+            <?php if (!empty($this->arrKeywordList)):
+                foreach ($this->arrKeywordList as $key => $arr_key):
+                    ?>
+                    <li>
+                        <a href="<?php echo $this->serverUrl() . $this->Url('keyword', array('keySlug' => $arr_key['key_slug'], 'keyId' => $arr_key['key_id'])) ?>"
+                           title="<?php echo $arr_key['key_name']; ?>">
+                            <?php echo $arr_key['key_name']; ?>
+                        </a>
+                    </li>
+
+                    <?php if ($key == 10): ?>
+                    <div id="adindexcenter" class="adbox" style="margin-bottom:20px">
+                        <!-- khampha -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-9166980393030854"
+                             data-ad-slot="3530466045"
+                             data-ad-format="auto"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                <?php endif; ?>
+
+                <?php endforeach;
+            endif;
+            ?>
+        </ul>
+    </div>
+    <?php echo $this->paging ?>
+</div>

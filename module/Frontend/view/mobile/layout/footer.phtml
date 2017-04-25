@@ -1,0 +1,91 @@
+<?php
+$arrMenuTopBottom = unserialize(ARR_MENU_TOP_BOTTOM);
+//p($arrMenuTopBottom);;die;
+//die;
+if (isset($_COOKIE['cookieCart'])) {
+    $arrTotalProductList = unserialize($_COOKIE['cookieCart']);
+    $totalProduct = 0;
+    foreach ($arrTotalProductList as $keyProduct => $valueProduct) {
+        $totalProduct = $totalProduct + $valueProduct['quantity'];
+    }
+}
+?>
+<script>
+    var countTotalProduct = <?php echo count($arrTotalProductList); ?>;
+</script>
+<div id="h-mnu">
+    <table>
+        <tr>
+            <?php if(!empty($arrMenuTopBottom)):
+                foreach ($arrMenuTopBottom as $val):
+                ?>
+            <td>
+                <div class="item <?php echo $val['class_icon'];?>"><a href="#"><?php echo $val['menu_name'];?></a></div>
+            </td>
+            
+            <?php endforeach; endif;?>
+        </tr>
+    </table>           
+</div>
+<div id="footer">
+    <table class="mnu">
+        <tr>
+            <td>
+                <a href="#">Hướng dẫn</a>
+            </td>
+            <td>
+                <a href="#">Chính sách khách hàng</a>
+            </td>
+            <td>
+                <a href="#"> Chính sách</a>
+            </td>
+            <td>
+                <a class="bor-none" href="#">Địa chỉ</a>
+            </td>
+        </tr>
+    </table>       
+
+    <div class="address">
+        <p><strong>Công ty TNHH MEGAVITA Việt Nam</strong></p>
+        <p><strong>MST:</strong> 0312962299 - Tel: 08 3602 7944 - 0908897041</p>
+        <p><strong>Địa chỉ:</strong> 118 Đường 3/2, Phường 12, Quận 10, Tp.Hồ Chí Minh</p>
+    </div>
+    <div class="ret">
+        <a href="#">Phiên bản Destop</a>
+    </div>
+</div>
+<div id="mnu">
+    <div class="head">
+        <div class="logo">
+            <a href="<?php echo $this->serverUrl(); ?>#ca"><img src="<?php echo STATIC_URL; ?>/f/mobile/images/logo_menu.png"/></a>
+        </div>
+
+        <div class="cart">
+            <a href="<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'view-cart')) ?>">
+                <div class="ic ic-crt-w">
+                    <div class="n-cart"><?php echo count($arrTotalProductList); ?></div>                        
+                </div>
+            </a>
+            <div class="cont">
+                <div class="tt">Giỏ hàng</div>
+                <div class="vl"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="mn">
+        <ul>
+            <li><a href="<?php echo $this->serverUrl(); ?>" class="ic-hm active">Trang chủ</a></li>
+            <li><a href="<?php echo $this->serverUrl() . '#box-ca'; ?>"  class="ic-lcat">Tất cả danh mục</a></li>
+            <li><a href="#" class="ic-ab">Về MegaVita</a></li>
+            <?php if (UID > 0): ?>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('profile', array('controller' => 'profile', 'action' => 'index')) ?>" class="ic-acc">Tài khoản</a></li>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('auth', array('controller' => 'auth', 'action' => 'logout')) ?>" class="ic-lgo">Đăng xuất</a></li>
+            <?php else: ?>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('auth', array('controller' => 'auth', 'action' => 'sigin')) ?>" class="ic-lgo">Đăng nhập</a></li>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('auth', array('controller' => 'auth', 'action' => 'register')) ?>" class="ic-acc">Đăng ký</a></li>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('auth', array('controller' => 'auth', 'action' => 'forgot-password')) ?>" class="ic-lgo">Quên mật khẩu</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</div>

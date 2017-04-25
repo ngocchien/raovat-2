@@ -1,0 +1,79 @@
+<?php
+//    p($this->arrProductListCookie);die;
+?>
+<!--<s>-->
+<div id="brcmb">
+    <a href="#"><span>Giỏ hàng</span></a>
+</div>
+<div id="cont">            
+    <div class="ls-pro"> 
+        <form method="POST">
+            <div class="hed">
+                <div class="f-l cr-yel">
+                    Sản phẩm
+                </div>
+                <div class="f-r cr-yel">
+                    Số lượng
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="ls">
+                <ul>
+                    <?php
+                    $totalPrice = 0;
+                    foreach ($this->listProductCart as $value):
+                        ($value['prod_is_promotion'] == 1) ? $totalPrice = $totalPrice + ($value['prod_promotion_price'] * $this->arrProductListCookie[$value['prod_id']]['quantity'] ) : $totalPrice = $totalPrice + ($value['prod_price'] * $this->arrProductListCookie[$value['prod_id']]['quantity']);
+//                    ($value['prod_is_promotion']==1) ? $totailPrice = $totailPrice + $value['prod_promotion_price'] : $totailPrice = $totailPrice + $value['prod_price'] ;
+                        ?>
+                        <li class="item">
+                            <div class="f-l img">
+                                <img src="<?php echo json_decode($value['prod_image'], true)['thumbImage']['120x120']; ?>"/>
+                            </div>
+                            <div class="inf">
+                                <div  class="tt"><a href="<?php echo $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail', 'productslug' => $value['prod_slug'], 'productId' => $value['prod_id'])) ?>"><?php echo $value['prod_name']; ?></a></div>
+                                <?php if ($value['prod_is_promotion'] == 1): ?>
+                                    <div class="op-price"><?php echo number_format($value['prod_price'], 0, ",", "."); ?> Vnđ</div>
+                                <?php endif; ?>
+                                <div class="cr-price"><?php echo ($value['prod_is_promotion'] == 1) ? number_format($value['prod_promotion_price'], 0, ",", ".") : number_format($value['prod_price'], 0, ",", ".") ?> Vnđ<br/>
+                                    <a class="cr-bl remove" href="javascript:;" rel="<?php echo $value['prod_id']; ?>">Xóa khỏi giỏ hàng</a>
+                                </div> 
+                                <div class="sel-prod">
+                                    <select class="quantity" rel="<?php echo $value['prod_id']; ?>">
+                                        <?php for ($i = 1; $i <= 20; $i++): ?>
+                                            <option value="<?php echo $i; ?>" <?php if ($this->arrProductListCookie[$value['prod_id']]['quantity'] == $i): ?> selected<?php endif; ?>><?php echo $i; ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </li>  
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="fot">
+                <div class="f-l cr-yel">
+                    Thành tiền
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="tot">
+                <div class="num f-l"><?php echo count($this->arrProductListCookie); ?> sản phẩm</div>
+                <div class="pric f-r">
+                    <div class="cr-red t-pric"><?php echo number_format($totalPrice, 0, ",", "."); ?> Vnđ</div>
+                    <div>Đã bao gồm VAT</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="button">
+                <button class="readmore">Đặt hàng >></button>
+                <button class="back bt-default" onClick="history.go(-1);
+                        return true;"> << Trở về</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var updatecartURL = '<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'update-cart-mobile')); ?>';
+    var removeproductcartURL = '<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'remove-product-cart')); ?>';
+    Order.index();
+</script>

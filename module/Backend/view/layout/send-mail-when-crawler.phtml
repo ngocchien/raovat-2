@@ -1,0 +1,32 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Tin nhắn từ - <?php echo \My\General::SITE_AUTH; ?>">
+        <meta name="author" content="<?php echo My\General::SITE_AUTH; ?>">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> 
+        <title>Nhadat.net</title>
+    </head>
+    <body>
+        <div style="width: 635px; margin: 50px auto; position: relative; overflow: hidden;font-family: arial;">
+            <div style="overflow: hidden; padding: 10px 0; margin-bottom: 50px">
+                <div style="float: left !important;"><a href="<?php echo BASE_URL; ?>" style="color: #22a0e2;"><img src="<?php echo STATIC_URL . '/f/v1/images/logoct.png'; ?>" alt="<?php echo My\General::SITE_AUTH; ?>"></a></div>
+            </div>
+            <div style="border-bottom: 1px solid #e6e6e6;">
+                <h4 style="color: #454545; font-weight: bold; font-size: 18px;">Xin chào <?php echo json_decode($this->arrContent['user_info'], true)['user_fullname']; ?> !</h4>
+                <p style="color: #454545; font-size: 18px;">
+                    Tin : <b><?php echo $this->arrContent['cont_title']; ?></b> <br/>
+                    đã được đăng trên <a href="<?php echo BASE_URL; ?>">bestquynhon.com</a><br/>
+                    Mời bạn click vào link bên dưới để xem chi tiết.
+                </p>
+                <div style="color: #454545; font-size: 18px; margin-bottom: 30px; padding: 30px 0 20px;">
+                    <center><div style="color: #e65711; border: none; padding: 10px 0; font-size: 30px; border-radius: 4px; cursor: pointer"><a style="text-decoration:none;" href="<?php echo $this->serverUrl() . '/rao-vat/' . $this->arrContent['cont_slug'] . '-' . $this->arrContent['cont_id'] . '.html'; ?>">&#xbb; <?php echo $this->arrContent['cont_title']; ?> &#xab;</a></div></center>
+                </div>
+                <p style="color: #454545; font-size: 18px;">
+                    Mật khẩu để sửa tin này là : <b><?php echo json_decode($this->arrContent['user_info'], true)['cont_password']; ?></b>
+                </p>
+            </div>
+            <?php echo $this->render('frontend/footer-email'); ?>
+        </div>
+    </body>
+</html>

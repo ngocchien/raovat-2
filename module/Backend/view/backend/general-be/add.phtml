@@ -1,0 +1,77 @@
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="icon-time"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-content')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+    <section class="panel panel-primary">
+        <header class="panel-heading">THÊM GENERAL</header>
+        <div class="panel-body">
+
+            <form id="frm" class="form-horizontal tasi-form"  method="POST">
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_name">Tiêu đề <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <input id="cont_name" name="gene_title" class="form-control" type="text" placeholder="Tiêu đề general" value="<?php echo $this->params['gene_title'] ? $this->params['gene_title'] : ''; ?>">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="gene_content">Nội dung <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <textarea id="cont_content" rows="10" name="gene_content" class="form-control wysihtml5" placeholder="Nhập nội dung bài đăng" ><?php echo ($this->params['gene_content']) ? $this->params['gene_content'] : null; ?></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Trạng thái<span style="color:red">*</span></label>
+                    <div class="col-lg-4">
+                        <select name="gene_status" class="form-control">
+                            <option value="0" <?php echo ($this->params['gene_status'] == 0) ? 'selected' : ''; ?>>Ẩn</option>
+                            <option value="1" <?php echo ($this->params['gene_status'] == 1) ? 'selected' : ''; ?>>Hiển thị</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" id="done" class="btn btn-success bt-save" name="save"><i class="icon-save"></i> Lưu</button>  
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </section>
+</section>
+<script type="text/javascript">
+    General.add();
+    tinymce.init({
+        selector: 'textarea',
+        width: "300",
+        height: "300",
+        plugins: "image imagetools,textcolor",
+        toolbar: 'fontsizeselect,image,forecolor backcolor',
+        fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt'
+    });
+</script>

@@ -1,0 +1,27 @@
+<div class="u-info">
+    <a href="<?php echo $this->serverUrl() . $this->Url('profile', array('controller' => 'profile', 'action' => 'edit')) ?>"><span> Xin chào <?php echo $this->arrDetailUser['user_fullname'];?></span></a>
+</div>
+<div id="cont">           
+    <div class="ls-cat">
+        
+        <?php
+        $successMessage = array_merge($this->flashMessenger()->setNamespace('success-edit-profile')->getMessages());
+        if ($successMessage):
+            ?>
+        <div class="alert alert-success" style="border: 1px #0081c2 solid;color: #009900">
+            <h2 style="text-align: center"> Hoàn tất!</h2>
+                <p>- <?php echo current($successMessage); ?></p>
+            </div>
+        <?php endif; ?>
+        
+        <div class="ls">
+            <ul>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('profile', array('controller' => 'profile', 'action' => 'edit')) ?>">Thông tin tài khoản</a></li>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('profile', array('controller' => 'profile', 'action' => 'change-password')) ?>">Thay đổi mật  khẩu</a></li>
+                <li><a href="#">Sổ địa chỉ</a></li>
+                <li><a href="<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'index')) ?>">Quản lý đơn hàng</a></li>
+                <li><a href="#">Sản phẩm yêu thích</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

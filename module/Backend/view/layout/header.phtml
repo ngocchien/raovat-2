@@ -1,0 +1,142 @@
+<?php
+$params = current($this->layout()->getChildren())->params;
+$module = $params['module'];
+$controller = $params['__CONTROLLER__'];
+$action = $params['action'];
+?>
+<header class="header white-bg">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <!--logo start-->
+        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'index', 'action' => 'index')); ?>" class="logo" ><span><?php echo \My\General::SITE_AUTH; ?></span></a>
+        <!--logo end-->
+        <div class="horizontal-menu navbar-collapse collapse" style="margin-left:0px ">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><b><i class="icon-book"></i> Content <b class="caret"></b></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-book"></i> Content</a>
+                            <ul class="dropdown-menu">
+                                <li class="<?php echo ($module == 'backend' && $controller == 'content' && $action == 'index') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'content', 'action' => 'index')); ?>">
+                                        List Content
+                                    </a>
+                                </li>
+                                <li class="<?php echo ($module == 'backend' && $controller == 'content' && $action == 'add') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'content', 'action' => 'add')); ?>">
+                                        Add Content
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-ul"></i> Category</a>
+                            <ul class="dropdown-menu">
+                                <li class="<?php echo ($module == 'backend' && $controller == 'category' && $action == 'index') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'index')); ?>">
+                                        List Category
+                                    </a>
+                                </li>
+                                <li class="<?php echo ($module == 'backend' && $controller == 'category' && $action == 'add') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'add')); ?>">
+                                        Add Category
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><b><i class="icon-user-md"></i> User <b class="caret"></b></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-group"> Group User</i></a>
+                            <ul class="dropdown-menu">
+                                <li class="<?php echo ($module == 'backend' && $controller == 'group' && $action == 'index') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'index')); ?>">
+                                        List Group
+                                    </a>
+                                </li>
+                                <li class="<?php echo ($module == 'backend' && $controller == 'group' && $action == 'add') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'add')); ?>">
+                                        Add Group
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"> User</i></a>
+                            <ul class="dropdown-menu">
+                                <li class="<?php echo ($module == 'backend' && $controller == 'user' && $action == 'index') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'index')); ?>">
+                                        List User
+                                    </a>
+                                </li>
+                                <li class="<?php echo ($module == 'backend' && $controller == 'user' && $action == 'add') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'add')); ?>">
+                                        Add User
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><b><i class="icon-terminal"></i> General <b class="caret"></b></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-terminal"> General</i></a>
+                            <ul class="dropdown-menu">
+                                <li class="<?php echo ($module == 'backend' && $controller == 'general-be' && $action == 'index') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'general-be', 'action' => 'index')); ?>">
+                                        List General
+                                    </a>
+                                </li>
+                                <li class="<?php echo ($module == 'backend' && $controller == 'general' && $action == 'add') ? 'active' : ''; ?>">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'general-be', 'action' => 'add')); ?>">
+                                        Add General
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="top-nav ">
+            <ul class="nav pull-right top-menu">
+                <li>
+                    <input type="text" class="form-control search" placeholder=" Search">
+                </li>
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <img alt="" src="<?php echo STATIC_URL; ?>/b/img/avatar1_small.jpg">
+                        <span class="username"><?php echo FULLNAME; ?></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <div class="log-arrow-up"></div>
+                        <li><a href="#"><i class=" icon-suitcase"></i>Account</a></li>
+                        <li><a href="#"><i class="icon-cog"></i> Setting</a></li>
+                        <li><a href="#"><i class="icon-bell-alt"></i> Notification</a></li>
+                        <li><a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'auth', 'action' => 'logout')); ?>"><i class="icon-key"></i> Logout</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+        </div>
+
+    </div>
+
+</header>
+<!--header end-->

@@ -1,0 +1,118 @@
+<?php
+$arrCategoryList = $this->arrCategoryList;
+?>
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="icon-time"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-content')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+    <section class="panel panel-primary">
+        <header class="panel-heading">THÊM BÀI ĐĂNG MỚI</header>
+        <div class="panel-body">
+
+            <form id="frm" class="form-horizontal tasi-form"  method="POST">
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_name">Tiêu đề bài viết <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <input id="cont_name" name="cont_name" class="form-control" type="text" placeholder="Vui lòng nhập tiêu đề cho bài viết" value="<?php echo $this->params['cont_name'] ? $this->params['cont_name'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_id">Chọn danh mục <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <select name="cate_id" class="form-control selectbox">
+                            <?php foreach ($arrCategoryList as $arrCategory): ?>
+                                <option value="<?php echo $arrCategory['cate_id']; ?>" <?php if ($this->params['cate_id'] == $arrCategory['cate_id']): ?> selected <?php endif; ?>><?php echo $arrCategory['cate_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_description">Mô tả ngắn cho bài đăng <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <textarea id="cont_description" rows="6" name="cont_description" class="form-control wysihtml5" placeholder="Nhập Mô tả ngắn cho bài đăng" ><?php echo ($this->params['cont_description']) ? $this->params['cont_description'] : null; ?></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_content">Nội dung bài đăng <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <textarea id="cont_content" rows="10" name="cont_content" class="form-control wysihtml5" placeholder="Nhập nội dung bài đăng" ><?php echo ($this->params['cont_content']) ? $this->params['cont_content'] : null; ?></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_sort">Sắp xếp</label>
+                    <div class="col-lg-5">
+                        <input id="cont_sort" name="cont_sort" class="form-control" type="text" placeholder="Nhập độ ưu tiên" value="<?php echo $this->params['cont_sort'] ? $this->params['cont_sort'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_meta_title">SEO Meta title <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <input id="cont_meta_title" name="cont_meta_title" class="form-control" type="text" placeholder="Nhập meta title cho bài đăng" value="<?php echo $this->params['cont_meta_title'] ? $this->params['cont_meta_title'] : ''; ?>" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_meta_description">SEO Meta Description <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <textarea id="cont_meta_description" rows="6" name="cont_meta_description" class="form-control editor" placeholder="Nhập meta description cho bài đăng" ><?php echo ($this->params['cont_meta_description']) ? $this->params['cont_meta_description'] : null; ?></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cont_meta_keyword">SEO Meta Keyword <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <input id="cont_meta_keyword" name="cont_meta_keyword" class="form-control" type="text" placeholder="Nhập meta keyword cho bài đăng" value="<?php echo $this->params['cont_meta_keyword'] ? $this->params['cont_meta_keyword'] : ''; ?>" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Trạng thái<span style="color:red">*</span></label>
+                    <div class="col-lg-4">
+                        <select name="cont_status" class="form-control">
+                            <option value="0" <?php echo ($this->params['cont_status'] == 0) ? 'selected' : ''; ?>>Ẩn</option>
+                            <option value="1" <?php echo ($this->params['cont_status'] == 1) ? 'selected' : ''; ?>>Hiển thị</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" id="done" class="btn btn-success bt-save" name="save"><i class="icon-save"></i> Lưu</button>  
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </section>
+</section>
+<script type="text/javascript">
+    Content.index();
+</script>

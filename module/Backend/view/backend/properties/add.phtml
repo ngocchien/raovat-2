@@ -1,0 +1,89 @@
+<section class="wrapper site-min-height">
+
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-properties')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <section class="panel panel-primary">
+        <header class="panel-heading">THÊM NHU CẦU RAO VẶT MỚI</header>
+        <div class="panel-body">
+
+            <form id="frm" class="form-horizontal tasi-form"  method="POST">
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="prop_name">Tên nhu cầu <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="cate_name" name="prop_name" class="form-control" type="text" placeholder="Vui lòng nhập tên nhu cầu | exp : Cần mua" value="<?php echo $this->params['prop_name'] ? $this->params['prop_name'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Thuộc nhóm nhu cầu</label>
+                    <div class="col-lg-5">
+                        <select name="parent_id" class="form-control parent_id">
+                            <option value="0" <?php if (empty($this->params['parent_id'])): ?> selected="selected"<?php endif; ?>>Chọn nhóm nhu cầu</option>
+                            <?php
+                            if (!empty($arrParentList)):
+                                foreach ($arrParentList as $arrParent):
+                                    ?>
+                                    <option value="<?php echo $arrParent['prop_id']; ?>" <?php echo (!empty($this->params['parent_id']) && $this->params['parent_id'] == $arrParent['prop_id']) ? 'selected' : ''; ?>><?php echo $arrParent['prop_name']; ?></option>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="prop_sort">Sắp xếp</label>
+                    <div class="col-lg-5">
+                        <input id="cate_sort" name="prop_sort" class="form-control" type="text" placeholder="Vui lòng nhập độ ưu tiên" value="<?php echo $this->params['prop_sort'] ? $this->params['prop_sort'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Trạng thái<span style="color:red">*</span></label>
+                    <div class="col-lg-4">
+                        <select name="prop_status" class="form-control">
+                            <option value="1" <?php echo ($this->params['prop_status'] == 1) ? 'selected' : ''; ?>>Hiển thị</option>
+                            <option value="0" <?php echo (isset($this->params['prop_status']) && $this->params['prop_status'] == 0) ? 'selected' : ''; ?>>Ẩn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" id="done" class="btn btn-success bt-save"><i class="icon-save"></i> Lưu</button>  
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </section>
+</section>
+<script type="text/javascript">
+    Prop.add();
+</script>

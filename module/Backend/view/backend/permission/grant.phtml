@@ -1,0 +1,55 @@
+<section class="wrapper site-min-height">
+    <section class="panel">
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel panel-primary">
+                    <header id="frmTitle" class="panel-heading">Phân quyền cho <?php if($this->currentPart == 'pid'):?> user : <?php else:?> nhóm : <?php endif;?> <?php echo $this->arrGroupName; ?></header>
+                    <div class="panel-body">
+                        <div class="row">
+                            <?php
+                            if ($this->arrResourceList):
+                                foreach ($this->arrResourceList as $arrResource):
+                                    $strModuleName = strtolower($arrResource['module']);
+                                    $strControllerName = strtolower($arrResource['controller']);
+                                    ?>
+                                    <div class="col-lg-3">
+                                        <section class="panel">
+                                            <header class="panel-heading">
+                                                <b><?php echo $strModuleName . ':' . $strControllerName; ?></b>
+                                                <span class="tools pull-right" style="display:none;"><img src="<?php echo STATIC_URL . '/b/images/loading.gif'; ?>" /></span>
+                                            </header>
+                                            <div class="panel-body">
+                                                <div class="actionList" style="height:190px;max-height:190px;overflow-x:scroll;overflow-x:hidden;">
+                                                    <?php
+                                                    if ($arrResource['action']):
+                                                        foreach ($arrResource['action'] as $strAction):
+                                                            $strResource = $strModuleName . ':' . $strControllerName . ':' . strtolower($strAction);
+                                                            ?>
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input type="checkbox" class="actionName" value="<?php echo $strResource; ?>" <?php echo in_array($strResource, $this->arrAllowedResource) ? 'checked="checked"' : ''; ?>>
+                                                                    <?php echo $strAction; ?>
+                                                                </label>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    <?php else: ?>
+                                                        <center>Hiện tại chưa có Action nào</center>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+    </section>
+</section>
+<script type="text/javascript">
+    var currentPart = '<?php echo $this->currentPart; ?>';
+    var intUserRole = '<?php echo $this->intUserRole; ?>';
+    Permission.grant();
+</script>

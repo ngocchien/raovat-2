@@ -1,0 +1,21 @@
+<?php
+$template = $this->template;
+$banner = json_decode($template['json_image'], TRUE);
+?>
+<div id="bnr">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <?php
+            foreach ($banner as $arrBanner):
+                $bannerImage = json_decode($arrBanner['img'], TRUE);
+                if (!empty($bannerImage['sourceImage'])):
+                    ?>
+                    <div class="swiper-slide"><a href="<?php echo $arrBanner['url'] ?>"><img title="<?php echo $arrBanner['title'] ?>" src="<?php echo $bannerImage['sourceImage'] ?>" style="width: 100%"/></a></div>
+                    <?php
+                endif;
+            endforeach;
+            ?>
+        </div>
+        <div class="swiper-pagination"></div>               
+    </div>
+</div>

@@ -1,0 +1,591 @@
+<?php
+$permission = json_decode(PERMISSION, true);
+$per = array();
+foreach ($permission as $key => $value) {
+    $per[$value["controller"]][$value["action"]] = true;
+}
+
+
+$controller = !empty($this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('controller', '')) ? $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('controller', '') : "";
+$arrData = explode('\\', $controller);
+$controller = strtolower(array_pop($arrData));
+$action = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('action', '');
+?>
+<aside>
+    <div id="sidebar"  class="nav-collapse ">
+        <ul class="sidebar-menu" id="nav-accordion">
+            <?php if (!empty($per["index"]) || FULL_ACCESS == true): ?>
+                <li>
+                    <a class="<?php echo $controller === 'index' ? 'active' : ''; ?>" href="<?php echo $this->serverUrl() . $this->Url('backend', array()); ?>">
+                        <i class="icon-home"></i>
+                        <span>TRANG CHỦ</span>
+                    </a>
+                </li>
+            <?php endif; ?>                
+            <?php if (!empty($per["category"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'category' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-reorder"></i>
+                        <span>QL Danh mục Sản phẩm</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'category' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["category"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'category' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category')); ?>">Danh sách Danh mục</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["category"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'category' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'add')); ?>">Thêm Danh mục mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["provider"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'provider' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-globe"></i>
+                        <span>QL Nhà cung cấp</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'provider' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["provider"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'provider' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'provider')); ?>">Danh sách nhà cung cấp</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["provider"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'provider' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'provider', 'action' => 'add')); ?>">Thêm nhà cung cấp mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?> 
+            <?php if (!empty($per["store"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'store' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-cloud"></i>
+                        <span>Quản Lý Kho</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'store' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["store"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'store' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'store')); ?>">Danh sách kho</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["store"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'store' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'store', 'action' => 'add')); ?>">Thêm kho</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["store"]["logsPayment"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'store' && $action === 'logsPayment') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'store', 'action' => 'logsPayment')); ?>">Lịch sử thanh toán</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>    
+            <?php if (!empty($per["product"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'product' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-tablet"></i>
+                        <span>Quản lý Sản phẩm</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'product' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["product"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'product' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'product')); ?>">Danh sách sản phẩm</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["product"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'product' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'product', 'action' => 'add')); ?>">Thêm sản phẩm mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>    
+            <?php if (!empty($per["newscategory"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'newscategory' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-folder-open"></i>
+                        <span>QL Danh mục bài viết</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'newscategory' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["newscategory"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'newscategory' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'NewsCategory')); ?>">Danh sách Danh mục</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["newscategory"]["add"]) || FULL_ACCESS == true): ?>
+        <!--                            <li class="<?php echo ($controller === 'newscategory' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'NewsCategory', 'action' => 'add')); ?>">Thêm Danh mục mới</a>
+                            </li>-->
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["content"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'content' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-book"></i>
+                        <span>Quản lý bài viết</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'content' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["content"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'content' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'content')); ?>">Danh sách bài viết</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["content"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'content' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'content', 'action' => 'add')); ?>">Thêm bài viết mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["brand"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'brand' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-apple"></i>
+                        <span>Quản lý Thương hiệu</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'brand' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["brand"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'brand' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'brand')); ?>">Danh sách Thương hiệu</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["brand"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'brand' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'brand', 'action' => 'add')); ?>">Thêm Thương hiệu mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+
+            <?php if (!empty($per["properties"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'properties' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-strikethrough"></i>
+                        <span>Quản lý thuộc tính</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'properties' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["properties"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'properties' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'properties')); ?>">Danh sách thuộc tính</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["properties"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'properties' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'properties', 'action' => 'add')); ?>">Thêm thuộc tính</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["tags"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'tags' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-tags"></i>
+                        <span>Quản lý Tags sản phẩm</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'tags' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["tags"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'tags' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'tags')); ?>">Danh sách Tags</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["tags"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'tags' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'tags', 'action' => 'add')); ?>">Thêm Tags</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+            <?php if (!empty($per["tagscontent"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'tagscontent' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-tag"></i>
+                        <span>Quản lý Tags bài viết</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'tagscontent' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["tagscontent"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'TagsContent' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'TagsContent')); ?>">Danh sách Tags bài viết</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["tagscontent"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'TagsContent' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'TagsContent', 'action' => 'add')); ?>">Thêm Tags bài viết</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>    
+
+            <?php if (!empty($per["order"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'order' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-shopping-cart"></i>
+                        <span>Quản lý Đơn hàng</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'order' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["order"]["index"]) || FULL_ACCESS == true): ?>
+
+                            <li class="<?php echo ($controller === 'order' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'order')); ?>">Danh sách đơn hàng</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["order"]["productFull"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'order' && $action === 'product_full') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'order', 'action' => 'product_full')); ?>">Danh sách sản phẩm</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["order"]["product"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'order' && $action === 'product') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'order', 'action' => 'product')); ?>">Duyệt sản phẩm</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["order"]["noteorder"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'order' && $action === 'noteorder') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'order', 'action' => 'noteorder')); ?>">Danh sách ghi chú</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>              
+
+
+            <?php if (!empty($per["menu"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'menu' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-list-alt"></i>
+                        <span>Quản lý Menu</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'menu' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["menu"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'menu' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'menu')); ?>">Danh sách Menu</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["menu"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'menu' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'menu', 'action' => 'add')); ?>">Thêm Menu mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>    
+            <?php if (!empty($per["banner"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'banner' ? 'active dcjq-parent' : ''; ?>">
+                        <i class=" icon-columns"></i>
+                        <span>Quản lý Banner</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'banner' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["banner"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'banner' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'banner')); ?>">Danh sách Banner</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["banner"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'banner' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'banner', 'action' => 'add')); ?>">Thêm banner mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["buyproduct"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'buyproduct' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-legal"></i>
+                        <span>Quản lý mua hàng</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'buyproduct' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["buyproduct"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'buyproduct' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'BuyProduct')); ?>">Danh sách sản phẩm</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["buyproduct"]["view"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'buyproduct' && $action === 'view') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'BuyProduct', 'action' => 'view')); ?>">Lịch sử mua hàng</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?> 
+            <?php if (!empty($per["template"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'template' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-th"></i>
+                        <span>Quản lý Template</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'template' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["template"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'template' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'template')); ?>">Danh sách Template</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["template"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'template' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'template', 'action' => 'add')); ?>">Thêm Template</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>  
+            <!--META-->     
+            <?php ?>			
+            <?php if (!empty($per["linkcategorybrand"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'linkcategorybrand' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-tasks"></i>
+                        <span>Quản lý Meta</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'linkcategorybrand' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["linkcategorybrand"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'linkcategorybrand' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'LinkCategoryBrand')); ?>">Danh sách Meta</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["linkcategorybrand"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'linkcategorybrand' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'LinkCategoryBrand', 'action' => 'add')); ?>">Thêm Meta mới</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+
+
+            <?php if (!empty($per["city"]["index"]) || !empty($per["district"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'city' || $controller === 'district' || $controller === 'ward' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-map-marker"></i>
+                        <span>Quản lý địa điểm</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'city' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["city"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo $controller === 'city' ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'city')); ?>">Danh sách Tỉnh / Thành</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["district"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo $controller === 'district' ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'district')); ?>">Danh sách Quận / Huyện</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>    
+            <?php if (!empty($per["comment"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'comment' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-comments"></i>
+                        <span>Quản lý Bình Luận</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'comment' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["comment"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'comment' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'comment')); ?>">Danh sách bình luận</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+
+            <?php if (!empty($per["shippingfee"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'shippingfee' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-truck"></i>
+                        <span>Phí vận chuyển</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'shippingfee' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["shippingfee"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'shippingfee' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'ShippingFee')); ?>">Danh sách phí vận chuyển</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["shippingfee"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'shippingfee' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'ShippingFee', 'action' => 'add')); ?>">Thêm phí vận chuyển</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+            <?php if (!empty($per["advisory"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'advisory' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-phone"></i>
+                        <span>Chăm sóc khách hàng</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'advisory' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["advisory"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'advisory' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'advisory')); ?>">Danh sách đăng ký tư vấn</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+            <?php if (!empty($per["subscribe"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'subscribe' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-thumbs-up-alt"></i>
+                        <span>Quản lý Đăng ký</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'subscribe' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["subscribe"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'subscribe' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'subscribe')); ?>">Danh sách đăng ký</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+
+            <?php if (!empty($per["user"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'user' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-user"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'user' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["user"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'user' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user')); ?>">Danh sách người dùng</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["user"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'user' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'add')); ?>">Thêm người dùng mới</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["user"]["bought"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'user' && $action === 'bought') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'bought')); ?>">Khách đã mua hàng</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["voucher"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'voucher' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-sun"></i>
+                        <span>Quản lý Voucher</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'voucher' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["voucher"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'voucher' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'voucher', 'action' => 'add')); ?>">Tạo Voucher</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["permission"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'permission' || $controller === 'group' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-group"></i>
+                        <span>Quản lý nhóm</span>
+                    </a>
+                    <ul class="sub" >
+                        <?php if (!empty($per["group"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'group' && ($action === 'index' || $action === 'edit')) ? 'active' : ''; ?>">
+                                <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group')); ?>">
+                                    <span>Danh sách nhóm</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["group"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'group' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'add')); ?>">Thêm nhóm</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["permission"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'permission' || $controller === 'keyword' ? 'active dcjq-parent' : ''; ?>">
+                        <i class=" icon-key"></i>
+                        <span>Quản lý Keyword</span>
+                    </a>
+                    <ul class="sub" >
+                        <?php if (!empty($per["keyword"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'keyword' && ($action === 'index' || $action === 'edit')) ? 'active' : ''; ?>">
+                                <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'keyword')); ?>">
+                                    <span>Danh sách Keyword</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["keyword"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'keyword' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'keyword', 'action' => 'add')); ?>">Thêm Keyword</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if (!empty($per["keyword"]["viewkeyword"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'keyword' && $action === 'viewkeyword') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'keyword', 'action' => 'viewkeyword')); ?>">Kiểm tra Keyword</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["general"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'general' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-gears"></i>
+                        <span>General</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'general' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["general"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'general' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'general')); ?>">Danh sách general</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (!empty($per["meeting"]["index"]) || FULL_ACCESS == true): ?>
+                <li class="sub-menu">
+                    <a href="" class="<?php echo $controller === 'meeting' ? 'active dcjq-parent' : ''; ?>">
+                        <i class="icon-paste"></i>
+                        <span>Họp</span>
+                    </a>
+                    <ul class="sub" style="<?php echo $controller === 'meeting' ? 'display: block;' : ''; ?>">
+                        <?php if (!empty($per["meeting"]["index"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'meeting' && $action === 'index') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'meeting')); ?>">Danh sách họp</a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (!empty($per["meeting"]["add"]) || FULL_ACCESS == true): ?>
+                            <li class="<?php echo ($controller === 'meeting' && $action === 'add') ? 'active' : ''; ?>">
+                                <a  href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'meeting', 'action' => 'add')); ?>">Thêm</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</aside>

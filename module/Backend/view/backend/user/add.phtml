@@ -1,0 +1,110 @@
+<?php
+$arrGroupList = $this->arrGroupList;
+?>
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <section class="panel panel-primary">
+        <header class="panel-heading">Thêm người dùng mới</header>
+        <div class="panel-body">
+
+            <form id="frm" class="form-horizontal tasi-form" role="form" method="POST">
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="fullName">Họ và Tên <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="fullName" name="fullName" class="form-control" type="text" placeholder="Vui lòng nhập Họ và Tên" value="<?php echo $this->params['fullName'] ? $this->params['fullName'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="email">Email <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="email" name="email" class="form-control" type="text" placeholder="Vui lòng nhập email" value="<?php echo $this->params['email'] ? $this->params['email'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="fullName">Giới tính <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <select name="gender" id="gender" class="form-control">
+                            <option value="1" <?php echo ($this->params['gender'] && $this->params['gender'] == 1) ? "selected" : ''; ?>>Nam</option>
+                            <option value="2" <?php echo ($this->params['gender'] && $this->params['gender'] == 0) ? "selected" : ''; ?>>Nữ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="birthdate">Ngày sinh</label>
+                    <div class="col-lg-5">
+                        <input id="birthdate" name="birthdate" placeholder="" data-mask="99/99/9999" class="form-control" type="text" placeholder="Vui lòng nhập ngày sinh" value="<?php echo $this->params['birthdate'] ? $this->params['birthdate'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="phoneNumber">Số điện thoại <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="phoneNumber" name="phoneNumber" class="form-control" type="text" placeholder="Vui lòng nhập số điện thoại" value="<?php echo $this->params['phoneNumber'] ? $this->params['phoneNumber'] : ''; ?>" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="password">Mật khẩu <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="password" name="password" class="form-control" type="password" placeholder="Vui lòng nhập mật khẩu">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="retypePassword">Nhập lại mật khẩu <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="rePassword" name="rePassword" class="form-control" type="password" placeholder="Vui lòng nhập lại mật khẩu">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Thuộc Nhóm<span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <select name="group" id="userRole" class="form-control">
+                            <option value="">Vui lòng chọn nhóm</option>
+                            <?php foreach ($arrGroupList as $arrGroup): ?>
+                                <option value="<?php echo $arrGroup['group_id']; ?>" <?php echo ($this->params['group'] == $arrGroup['group_id']) ? 'selected' : ''; ?>><?php echo $arrGroup['group_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Tình trạng<span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <select name="user_status" id="userRole" class="form-control">
+                            <option value="1" <?php echo ($this->params['user_status'] && $this->params['user_status'] == 1) ? 'selected' : ''; ?>>Hoạt động</option>
+                            <option value="0" <?php echo ($this->params['user_status'] && $this->params['user_status'] == 0) ? 'selected' : ''; ?>>Khóa tài khoản</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" id="done" class="btn btn-success bt-save"><i class="icon-save"></i> Lưu</button>  
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </section>
+</section>
+<script type="text/javascript">
+    User.index();
+</script>

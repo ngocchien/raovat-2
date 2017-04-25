@@ -1,0 +1,33 @@
+<?php
+$paramsRouter = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch()->getParams();
+$routeName = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+$controller = $paramsRouter['__CONTROLLER__'];
+$action = $paramsRouter['action'];
+?>
+<div class="leftbar">
+    <div  class="navbox clearfix">
+        <div class="title">☰ Danh mục</div>
+        <ul id="leftnav" class="navigation clearfix">
+            <?php
+                foreach (unserialize(ARR_CATEGORY_BY_PARENT) as $arr_category):
+                    if(!empty($arr_category)):
+                        foreach ($arr_category as $category):?>
+                            <li class="l2 tax-<?php echo $category['cate_slug'];?>">
+                                <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category['cate_slug'], 'cateId' => $category['cate_id']]) ?>">
+                                    <img src="<?php echo STATIC_URL.$category['cate_img_url'];?>" />
+                                    <?php echo $category['cate_name'];?>
+                                </a>
+                            </li>
+                        <?php endforeach;
+                    endif;
+                endforeach;
+            ?>
+            <li class="l2 tax-danh-sach-tu-khoa">
+                <a href="<?php echo $this->serverUrl() . $this->Url('list-keyword') ?>">
+                    <img src="<?php echo STATIC_URL.'/f/v1/img/category/FanFilled.png';?>" />
+                    Danh sách từ khoá
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

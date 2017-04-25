@@ -1,0 +1,78 @@
+<?php
+$arrRole = $this->arrGroupList;
+?>
+<section class="wrapper site-min-height">
+    <?php
+    $errorMessage = array_merge($this->flashMessenger()->setNamespace('empty-role')->getMessages(), $this->flashMessenger()->setNamespace('empty-or-wrong-role')->getMessages());
+    if ($errorMessage):
+        ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <p> - <?php echo current($errorMessage); ?></p>
+        </div>
+    <?php endif; ?>
+    <?php
+    $successMessage = $this->flashMessenger()->setNamespace('success')->getMessages();
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+    <form method="POST">
+        <div class="row">
+            <?php
+            $roleList = $this->arrRoleList;
+            foreach ($roleList["backend"] as $key => $value) {
+                ?>
+                <div class="col-md-4">
+                    <section class="panel tasks-widget">
+                        <header class="panel-heading">
+                            <?php echo $value["name"]; ?>
+                        </header>
+                        <div class="panel-body">
+                            <div class="task-content role-scroll">
+                                <ul class="task-list">
+                                    <?php
+                                    if (count($value["children"])) {
+                                        foreach ($value["children"] as $k => $val) {
+                                            ?>
+                                            <li>
+                                                <div class="task-checkbox">
+                                                    <input type="checkbox"  <?php echo in_array($val["role_id"], $this->arrPerList) ? "checked" : ""; ?> name="role[<?php echo $val["role_id"]; ?>]" class="list-child" >
+                                                </div>
+                                                <div class="task-title">                                                    
+                                                    <span class="badge badge-sm label-success"><?php echo $val["action"]; ?></span>
+                                                    <span class="task-title-sp"><?php echo $val["role_name"]; ?></span>
+                                                </div>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                <button type="submit" class="btn btn-success"><i class="icon-save"></i> Hoàn tất</button>
+            </div>
+        </div>
+    </form>
+</section>
+<script>
+Permission.index();
+</script>

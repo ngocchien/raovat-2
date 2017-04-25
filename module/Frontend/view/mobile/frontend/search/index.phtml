@@ -1,0 +1,52 @@
+<div id="brcmb">
+    SEARCH > Kết quả tìm kiếm : ' <?php echo $this->params['s'];?> '
+    <a href="#"><span><?php echo $this->tagsDetail['tags_name']; ?></span></a> >
+</div>
+<div id="cont">
+    <?php if (!empty($this->arrProductList)): ?>
+        <div class="ls-pro">               
+            <div class="ls">
+                <ul>
+                    <?php foreach ($this->arrProductList as $key => $value): ?>
+                        <li>
+                            <div class="f-l img">
+                                <img src="<?php echo json_decode($value['prod_image'], true)['thumbImage']['120x120']; ?>"/>
+                            </div>
+                            <?php if ($value['prod_call_price'] == 1): ?>
+                                <div class="inf">
+                                    <div  class="tt"><a href="<?php echo $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail', 'productslug' => $value['prod_slug'], 'productId' => $value['prod_id'])) ?>"><?php echo $value['prod_name']; ?></a></div>
+                                    <div class="cr-price">Liên hệ để biết giá</div>
+                                </div>
+                            <?php else: ?>
+                                <div class="inf">
+                                    <div  class="tt"><a href="<?php echo $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail', 'productslug' => $value['prod_slug'], 'productId' => $value['prod_id'])) ?>"><?php echo $value['prod_name']; ?></a></div>
+                                    <?php if ($value['prod_is_promotion'] == 1): ?><div class="op-price"><?php echo number_format($value['prod_price'], 0, ",", "."); ?> Vnđ</div><?php endif; ?>
+                                    <div class="cr-price"><?php echo ($value['prod_is_promotion'] == 1) ? number_format($value['prod_promotion_price'], 0, ",", ".") : number_format($value['prod_price'], 0, ",", "."); ?> Vnđ</div>
+                                    <?php if ($value['prod_is_promotion'] == 1): ?>
+                                        <div class="percen">
+                                            <?php
+                                            $percent = 100 - ($value['prod_promotion_price'] * 100 / $value['prod_price']);
+                                            echo $percent;
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="clear"></div>
+                        </li>  
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php if ($this->countPage > 1): 
+                    if($this->intPage < $this->countPage):?>
+            <div class="button"><a href="<?php echo $this->serverUrl() . $this->Url('frontend-search', array('controller' => 'search', 'action' => 'index', 's' => $this->params['s'],'page'=>($this->intPage+1))) ?>"><button class="readmore">Xem Thêm</button><a></div>
+                    <?php endif;
+                    if($this->intPage > 1):?>
+                        <div class="button"><a href="<?php echo $this->serverUrl() . $this->Url('frontend-search', array('controller' => 'search', 'action' => 'index', 's' => $this->params['s'],'page'=>($this->intPage-1))) ?>"><button class="back bt-default">Trở Về</button></a></div>
+                    <?php endif;?>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="ls-pro"> Hiện chưa có sản phẩm nào trong tags : <?php echo $this->tagsDetail['tags_name']; ?> </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,90 @@
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-group')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <aside class="profile-info col-lg-12">
+            <section>
+                <div class="panel">
+                    <div class="panel-heading"> Thêm nhóm mới</div>
+                    <div class="panel-body">
+                        <form id="frm" class="form-horizontal tasi-form" role="form" method="POST">
+                            <div class="form-group">
+                                <label for="groupName"  class="col-lg-2 col-sm-2 col-md-2 control-label">Tên Nhóm<span style="color:red">*</span></label>
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <input type="text" name="groupName" id="groupName" class="form-control" value="<?php echo $this->params['groupName'] ? $this->params['groupName'] : '' ?>" placeholder="Vui lòng nhập tên nhóm">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 col-md-2 control-label" for="isAcp">Có quyền vào backend ?</label>
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <select name="isAcp" id="isAcp" class="form-control ">
+                                        <option value="0" <?php if ($this->params['isAcp'] && $this->params['isAcp'] == 0): ?> selected <?php endif; ?>>Không</option>
+                                        <option value="1" <?php if ($this->params['isAcp'] && $this->params['isAcp'] == 1): ?> selected <?php endif; ?>>Có</option>
+                                    </select>
+                                </div>
+                            </div>                       
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 col-md-2 control-label" for="isFullaccess">Đầy đủ quyền hạn</label>
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <select name="isFullaccess" id="isFullaccess" class="form-control ">
+                                        <option value="0" <?php if ($this->params['isFullaccess'] && $this->params['isFullaccess'] == 0): ?> selected <?php endif; ?>>Không</option>
+                                        <option value="1" <?php if ($this->params['isFullaccess'] && $this->params['isFullaccess'] == 1): ?> selected <?php endif; ?>>Có</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 col-md-2 control-label" for="status">Status</label>
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <select name="status" id="status" class="form-control ">
+                                        <option value="1" <?php if ($this->params['status'] && $this->params['status'] == 1): ?> selected <?php endif; ?>>Active</option>
+                                        <option value="0" <?php if ($this->params['status'] && $this->params['status'] == 0): ?> selected <?php endif; ?>>Deni</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 col-md-2 control-label" for="status">CSS Color</label>
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <textarea name="groupCss" id="groupCss" class="form-control" value="" placeholder="Css"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10 col-sm-10 col-md-10">
+                                    <button type="submit" id="done" class="btn btn-success bt-save"><i class="icon-save"></i> Lưu</button>  
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</section>
+<script>
+    Group.index();
+</script>

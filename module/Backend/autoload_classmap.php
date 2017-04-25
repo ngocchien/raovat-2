@@ -1,0 +1,33 @@
+<?php
+
+return array(
+    'Backend\Module' => __DIR__ . '/Module.php',
+    'Backend\Controller\IndexController' => __DIR__ . '/src/Backend/Controller/IndexController.php',
+    'Backend\Controller\CityController' => __DIR__ . '/src/Backend/Controller/CityController.php',
+    'Backend\Controller\DistrictController' => __DIR__ . '/src/Backend/Controller/DistrictController.php',
+    'Backend\Controller\WardController' => __DIR__ . '/src/Backend/Controller/WardController.php',
+    'Backend\Controller\AuthController' => __DIR__ . '/src/Backend/Controller/AuthController.php',
+    'Backend\Controller\PermissionController' => __DIR__ . '/src/Backend/Controller/PermissionController.php',
+    'Backend\Controller\UserController' => __DIR__ . '/src/Backend/Controller/UserController.php',
+    'Backend\Controller\GroupController' => __DIR__ . '/src/Backend/Controller/GroupController.php',
+    'Backend\Controller\CommentController' => __DIR__ . '/src/Backend/Controller/CommentController.php',
+    'Backend\Controller\ProductController' => __DIR__ . '/src/Backend/Controller/ProductController.php',
+    'Backend\Controller\PropertiesController' => __DIR__ . '/src/Backend/Controller/PropertiesController.php',
+    'Backend\Controller\ContentController' => __DIR__ . '/src/Backend/Controller/ContentController.php',
+    'Backend\Controller\CategoryController' => __DIR__ . '/src/Backend/Controller/CategoryController.php',
+    'Backend\Controller\BrandController' => __DIR__ . '/src/Backend/Controller/BrandController.php',
+    'Backend\Controller\SubscribeController' => __DIR__ . '/src/Backend/Controller/SubscribeController.php',
+    'Backend\Controller\NewsCategoryController' => __DIR__ . '/src/Backend/Controller/NewsCategoryController.php',
+    'Backend\Controller\UploaderController' => __DIR__ . '/src/Backend/Controller/UploaderController.php',
+    'Backend\Controller\TagsController' => __DIR__ . '/src/Backend/Controller/TagsController.php',
+    'Backend\Controller\ProfileController' => __DIR__ . '/src/Backend/Controller/ProfileController.php',
+    'Backend\Controller\OrderController' => __DIR__ . '/src/Backend/Controller/OrderController.php',
+    'Backend\Controller\TemplateController' => __DIR__ . '/src/Backend/Controller/TemplateController.php',
+    'Backend\Controller\MenuController' => __DIR__ . '/src/Backend/Controller/MenuController.php',
+    'Backend\Controller\ConsoleController' => __DIR__ . '/src/Backend/Controller/ConsoleController.php',
+    'Backend\Controller\GeneralController' => __DIR__ . '/src/Backend/Controller/GeneralController.php',
+    'Backend\Controller\MessageController' => __DIR__ . '/src/Backend/Controller/MessageController.php',
+    'Backend\Controller\GeneralBeController' => __DIR__ . '/src/Backend/Controller/GeneralBeController.php',
+    'Backend\Controller\ToolController' => __DIR__ . '/src/Backend/Controller/ToolController.php',
+    
+);

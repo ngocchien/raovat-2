@@ -1,0 +1,26 @@
+<?php
+$template = $this->template;
+$banner=  json_decode($template['json_image'],TRUE);
+?>
+<div class="box">
+            <div class="tt">
+               <?php echo $template['title']; ?>
+            </div>
+            <div class="sld">
+                <div class="sw-cont">
+                    <div class="swiper-wrapper">
+                        <?php
+                        foreach ($banner as $value):
+                            if (!empty(json_decode($value['img'], true)['sourceImage'])):
+                                ?>
+                                <div class="swiper-slide">
+                                    <img src="<?php echo json_decode($value['img'], true)['sourceImage']; ?>" style="width: 100%"/>
+                                </div>
+        <?php endif;
+    endforeach; ?>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>

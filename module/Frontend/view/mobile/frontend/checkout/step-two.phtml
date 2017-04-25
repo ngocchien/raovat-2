@@ -1,0 +1,98 @@
+<?php
+$arrOrder = $this->arrOrder;
+$arrDetailOrder = $this->arrDetailOrder;
+$arrProductInOrder=$this->arrProductInOrder;
+?>
+<div class="u-info">
+    <a href="#"><span>STEP THREE</span></a>
+</div>
+<div id="cont">           
+    <div class="us-or"> 
+        <div class="tt-step3">
+            Thông tin đơn hàng
+        </div>
+        <div class="ls-pd">
+            <ul>
+                <?php foreach($arrDetailOrder as $key => $value):?>
+                <li>
+                    <div class="f-l img">
+                        <img src="<?php echo json_decode($value['prod_image'], true)['thumbImage']['120x120']; ?>" >
+                    </div>
+                    <div class="inf">
+                        <div class="tt"><a href="<?php echo $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail','productslug'=>$value['prod_slug'],'productId'=>$value['prod_id'])) ?>"><?php echo $value['prod_name']; ?></a></div>                               
+                        <div class="num">
+                            Số lượng: <?php echo $value['prod_quantity'];?>
+                        </div>
+                        <div class="cr-price"><?php echo number_format($value['prod_price'],0,",",".");?> Vnđ</div>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <?php endforeach;?>
+                <li class="end">                            
+                    <div class="inf">    
+                        Thành tiền (Đã Bao Gồm VAT)
+                        <div class="cr-price"><?php echo number_format($arrOrder['orde_total_price'],0,",","."); ?> Vnđ</div>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="tt-step3">
+            Thông tin giao hàng
+        </div>
+
+        <div class="ls-pd">
+            <ul>
+                <li class="end">                            
+                    <div class="inf">    
+                        <?php echo json_decode($arrOrder['orde_detail'], true)['fullname'] ?>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <li class="end">                            
+                    <div class="inf">    
+                        <?php echo json_decode($arrOrder['orde_detail'], true)['email'] ?>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <li class="end">                            
+                    <div class="inf">    
+                        <?php echo json_decode($arrOrder['orde_detail'], true)['address'] ?>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <li class="end">                            
+                    <div class="inf">    
+                        <?php echo json_decode($arrOrder['orde_detail'], true)['phone'] ?>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tt-step3">
+            Hình thức thanh toán
+        </div>
+
+        <div class="ls-pd">
+            <ul>
+                <li class="end">                            
+                    <div class="inf">    
+                        <?php if ($arrOrder['orde_payment'] == 1): ?>
+                            Thanh toán khi nhận hàng
+                        <?php elseif ($arrOrder['orde_payment'] == 2): ?>
+                            Chuyển khoản Ngân hàng
+                        <?php else: ?>
+                            Thanh toán Bảo Kim
+                        <?php endif; ?>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="button"><a href="<?php echo $this->serverUrl();?>"><button class="readmore">Tiếp tục mua hàng &gt;&gt;</button></a></div>
+    </div>
+</div>

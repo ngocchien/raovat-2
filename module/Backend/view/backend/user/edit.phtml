@@ -1,0 +1,152 @@
+<?php
+$arrGroupList = $this->arrGroupList;
+?>
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-edit-user')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <?php if ($this->arrUser['user_gender'] == 1) : ?>
+                            <img src = "<?php echo STATIC_URL . '/b/img/no_avatar_male.jpg' ?>">
+                        <?php else : ?>
+                            <img src = "<?php echo STATIC_URL . '/b/img/no_avatar_female.jpg' ?>">
+                        <?php endif; ?>
+                    </a>
+                    <h1><?php echo $this->arrUser['user_fullname']
+                        ?></h1>
+                    <p><?php echo $this->arrUser['user_email'] ?></p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="<?php echo $this->params['action'] === 'view' ? 'active' : ''; ?>">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'view', 'id' => $this->arrUser['user_id'])); ?>"> <i class="fa fa-user"></i>Thông tin tài khoản</a>
+                    </li>
+                    <li class="<?php echo $this->params['action'] === 'recent' ? 'active' : ''; ?>">
+                        <a href="#"> <i class="fa fa-calendar"></i> Hoạt động gần đây <span class="label label-danger pull-right r-activity">9</span></a>
+                    </li>
+                    <li class="<?php echo $this->params['action'] === 'edit' ? 'active' : ''; ?>">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'edit', 'id' => $this->arrUser['user_id'])); ?>"> <i class="fa fa-edit"></i>Chỉnh sửa  thông tin tài khoản</a>
+                    </li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+            <section>
+                <div class="panel">
+                    <div class="panel-heading"> Chỉnh sửa thông tin tài khoản</div>
+                    <div class="panel-body">
+                        <form id="frm" class="form-horizontal tasi-form" role="form" method="POST">
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Họ và Tên <span style="color:red">*</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="fullName" class="form-control" value="<?php echo $this->arrUser['user_fullname'] ?>" placeholder="Vui lòng nhập Họ và Tên">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Email <span style="color:red">*</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="email" class="form-control" value="<?php echo $this->arrUser['user_email'] ?>" placeholder="Vui lòng nhập Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Mật khẩu</label>
+                                <div class="col-lg-10">
+                                    <input type="password" name="password" class="form-control ignore" value="" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Giới tính <span style="color:red">*</span></label>
+                                <div class="col-lg-10">
+                                    <select name="gender" id="gender" class="form-control">
+                                        <option value="">--Mời chọn--</option>
+                                        <?php
+                                        foreach (My\General::getGender() as $key => $value):
+                                            ?>
+                                            <option value="<?php echo $key ?>" <?php echo $this->arrUser['user_gender'] == $key ? 'selected="selected"' : ''; ?>><?php echo $value ?></option>
+                                            <?php
+                                        endforeach;
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Số điện thoại <span style="color:red">*</span></label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="phoneNumber" class="form-control" value="<?php echo $this->arrUser['user_phone'] ?>" placeholder="Vui lòng nhập số điện thoại">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 col-sm-2 control-label" for="birthdate">Ngày sinh</label>
+                                <div class="col-lg-10">
+                                    <input id="birthdate" name="birthdate" class="form-control" type="text" placeholder="Vui lòng nhập ngày sinh" value="<?php echo date('d-m-Y', $this->arrUser['user_birthday']) ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Thuộc nhóm <span style="color:red">*</span></label>
+                                <div class="col-lg-10">
+                                    <select name="group" id="role" class="form-control">
+                                        <option value="0">== Chọn Nhóm ==</option>
+                                        <?php foreach ($arrGroupList as $group): ?>
+                                            <option value="<?php echo $group['group_id']; ?>" <?php echo ($this->arrUser['group_id'] == $group['group_id']) ? 'selected="selected"' : ''; ?>><?php echo $group['group_name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">Tình trạng<span style="color:red">*</span></label>
+                                <div class="col-lg-10">
+                                    <select name="user_status" id="userRole" class="form-control">
+                                        <option value="1" <?php echo ($this->arrUser['user_status'] == 1) ? 'selected' : ''; ?>>Hoạt động</option>
+                                        <option value="0" <?php echo ($this->arrUser['user_status'] == 0) ? 'selected' : ''; ?>>Khóa tài khoản</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" id="done" class="btn btn-success bt-save" name="save"><i class="icon-save"></i> Lưu</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</section>
+<script type="text/javascript">
+    User.index();
+    User.edit();
+</script>

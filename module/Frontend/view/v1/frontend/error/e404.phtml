@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--    <meta http-equiv="refresh" content="3;url=http://khampha.tech/"/>-->
+    <!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+    <title>404 Page Error</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: table;
+            font-weight: 100;
+            font-family: 'Lato';
+        }
+
+        .container {
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .content {
+            text-align: center;
+            display: inline-block;
+        }
+
+        .title {
+            font-size: 96px;
+        }
+
+        a {
+            color: #000;
+            text-decoration: inherit;
+            font-weight: bold;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 100;
+            src: local('Lato Hairline'), local('Lato-Hairline'), url(https://fonts.gstatic.com/s/lato/v11/GtRkRNTnri0g82CjKnEB0Q.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        <div class="title">404</div>
+        <div class="text-center"><a href="<?php echo My\General::SITE_DOMAIN_FULL ?>" title="Home">Back Home</a></div>
+        <div>Hệ thống sẽ tự động chuyển về <a href="<?php echo My\General::SITE_DOMAIN_FULL ?>" title="Home">Trang
+                Chủ</a> sau : <span
+                id="counter">5</span> giây
+        </div>
+        <script>
+            setInterval(function () {
+                var div = document.querySelector("#counter");
+                var count = div.textContent * 1 - 1;
+                div.textContent = count;
+                if (count <= 0) {
+                    location.href = "<?php echo My\General::SITE_DOMAIN_FULL?>";
+                }
+            }, 1000);
+        </script>
+    </div>
+</div>
+
+
+</body>
+</html>

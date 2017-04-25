@@ -1,0 +1,108 @@
+<?php
+$arrUserList = $this->arrUserList;
+?>
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-group')->getMessages(), $this->flashMessenger()->setNamespace('success-edit-group')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel panel-primary">
+                <header class="panel-heading">
+                    Danh sách nhóm
+                </header>
+                <div class="panel-body">    
+                    <div class="adv-table editable-table ">  
+                        <div class="row">
+                            <div class="col-lg-6">                  
+                                <div id="editable-sample_length" class="dataTables_length no-padding">
+                                    <a class="btn btn-primary" href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'add')); ?>" ><i class="icon-plus-sign-alt"></i> Thêm</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <form id="frm" class="form-horizontal" role="form" method="GET">
+                                    <div class="col-xs-9 no-padding">
+                                        <div class="dataTables_filter no-padding per-100">
+                                            <label><input  name="s"  value="<?php echo $this->params["s"]; ?>" type="text" aria-controls="editable-sample" class="per-100 input-seaching form-control medium"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 no-padding-right">
+                                        <button type="submit"  class="btn btn-white per-100" ><i class="icon-search"></i> Tìm kiếm</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <section id="unseen">
+                            <table class="table table-bordered table-striped table-condensed cf">
+                                <thead class="cf">
+                                    <tr>
+                                        <th class="text-center">Tên nhóm</th>
+                                        <th class="text-center">Ngày tạo</th>
+                                        <th class="text-center">Người tạo</th>
+                                        <th class="text-center">Trạng thái</th>
+                                        <th class="text-center">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if ($this->arrGroupList):
+                                        foreach ($this->arrGroupList as $arrGroup):
+                                            ?>
+
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a class="tooltips" data-placement="top" data-original-title="Xem thông tin người dùng" href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'edit', 'id' => $arrGroup['group_id'])); ?>">
+                                                        <?php echo $arrGroup['group_name']; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center"><?php echo date('d/m/Y H:i', $arrGroup['created_date']); ?></td>
+                                                <td class="text-center"><?php echo $arrUserList[$arrGroup['user_created']]['user_fullname']; ?></td>
+                                                <td class="text-center" width="100"><?php echo $arrGroup['group_status'] ? '<a href="javascript:;" class="color-success" data-toggle="tooltip" title="Hoạt động"><i class="icon-ok"></i></a>' : ' <a href="javascript:;" data-toggle="tooltip" title="Đã khóa"><i class="icon-minus-sign color-danger"></i></a>'; ?></td>
+                                                <td class="text-center" width="100">
+                                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'permission', 'action' => 'grant', 'gid' => $arrGroup['group_id'])); ?>" class="btn btn-success btn-xs tooltips edit" data-toggle="tooltip" title="Phân quyền"><i class="icon-lock"></i></a>
+                                                    <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'group', 'action' => 'edit', 'id' => $arrGroup['group_id'])); ?>" class="btn btn-primary btn-xs edit" data-toggle="tooltip" title="Chỉnh sửa"><i class="icon-pencil"></i></a>
+                                                    <a class="btn btn-danger btn-xs remove" data-toggle="tooltip" title="Xóa" rel="<?php echo $arrGroup['group_id'] ?>"><i class="icon-trash "></i></a>
+                                                </td>
+                                            </tr>
+
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr><td colspan="6" style="text-align:center;">Hiện tại chưa có người dùng nào.</td></tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+                    <div>
+                        <?php echo $this->paging; ?>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    Group.index();
+</script>

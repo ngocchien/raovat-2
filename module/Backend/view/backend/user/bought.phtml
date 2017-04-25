@@ -1,0 +1,114 @@
+<?php
+$arrRole = $this->arrRole;
+?>
+<section class="wrapper site-min-height">   
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-user')->getMessages(), $this->flashMessenger()->setNamespace('success-edit-user')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+    <section class="panel">
+        <header class="panel-heading">
+            Danh sách khách đã mua hàng
+        </header>
+        <div class="panel-body">    
+            <div class="adv-table editable-table ">  
+                <form id="frm" class="form-horizontal" role="form" method="GET">
+                    <div class="row">
+                      <div class="col-lg-2">
+                          <section class="panel">
+                              <div class=""><input name="id" value="<?php echo $this->params['id'] ?>" type="text" aria-controls="editable-sample" class="per-100 input-seaching form-control medium" placeholder="Nhập mã KH"></div>
+                          </section>
+                      </div>
+                      <div class="col-lg-2">
+                          <section class="panel">
+                              <div class=""><input name="fullname" value="<?php echo $this->params['fullname'] ?>" type="text" aria-controls="editable-sample" class="per-100 input-seaching form-control medium" placeholder="Nhập họ tên"></div>
+                          </section>
+                      </div>
+                      <div class="col-lg-2">
+                          <section class="panel">
+                              <div class=""><input name="email" value="<?php echo $this->params['email'] ?>" type="text" aria-controls="editable-sample" class="per-100 input-seaching form-control medium" placeholder="Nhập email"></div>
+                          </section>
+                      </div>
+                      <div class="col-lg-6">
+                            <div class="col-lg-6">
+                              <section class="panel">
+                                  <div class=""><input name="phone" value="<?php echo $this->params['phone'] ?>" type="text" aria-controls="editable-sample" class="per-100 input-seaching form-control medium" placeholder="Nhập điện thoại"></div>
+                              </section>
+                            </div>
+                            <div class="col-lg-6">
+                                <section class="panel">
+                                    <div class=""><button type="submit" class="btn btn-white per-100"><i class="icon-search"></i> Tìm kiếm</button></div>
+                                </section>
+                            </div>
+                      </div>
+                  </div>
+                </form>
+                <section id="unseen">
+                    <table class="table table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                            <tr>
+                                <th class="text-center"><i class="icon-list"></i> ID</th>
+                                <th class="text-center visible-lg visible-sm visible-md visible-xs" width="15%"><i class="icon-user"></i> Họ Và Tên</th>
+                                <th class="text-center hidden-xs"><i class="icon-envelope-alt"></i> Email</th>
+                                <th class="text-center visible-lg visible-sm visible-md visible-xs" width="15%"><i class="icon-phone"></i> Số ĐT</th>
+                                <th class="text-center visible-lg visible-sm visible-md visible-xs" width="15%"><i class="icon-money"></i> Tổng tiền</th>
+                                <th class="text-center visible-lg visible-sm visible-md visible-xs"><i class="icon-edit"></i> Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($this->arrUserList):
+                                foreach ($this->arrUserList as $arrUser):
+                                    ?>
+                                    <tr id="<?php echo $arrUser['user_id'] ?>">                         
+                                        <td  class="text-center" width="80">
+                                            <?php echo $arrUser['user_id']; ?>
+                                        </td>
+                                        <td class="visible-lg visible-sm visible-md visible-xs">
+                                            <a class="tooltips" data-placement="top" data-original-title="Xem thông tin người dùng" href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'user', 'action' => 'view', 'id' => $arrUser['user_id'])); ?>">
+                                                <?php echo $arrUser['user_fullname']; ?>
+                                            </a>
+                                        </td>
+                                        <td class="hidden-xs"><?php echo $arrUser['user_email']; ?> </td>
+                                        <td  class="text-center visible-lg visible-sm visible-md visible-xs"><?php echo $arrUser['user_phone']; ?></td>
+                                        <td  class="text-center visible-lg visible-sm visible-md visible-xs"><?php echo number_format($arrUser['total']); ?></td>
+                                        <td class="text-center"><a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'order', 'action' => 'listorder','id'=> $arrUser['user_id'])); ?>" class="btn btn-primary btn-xs  edit" data-placement="top" data-original-title="Xem thông tin" rel="711"><i class="icon-eye-open"></i> Xem</a></td>
+                                    </tr>
+
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="6" class="text-center">Hiện tại chưa có người dùng nào.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </section>  
+            </div>
+            <div>
+                <?php echo $this->paging; ?>
+            </div>
+        </div>
+    </section>
+</section>
+<script type="text/javascript">
+
+</script>

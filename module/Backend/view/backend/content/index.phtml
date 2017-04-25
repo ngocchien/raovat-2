@@ -1,0 +1,121 @@
+<?php
+$arrContentList = $this->arrContentList;
+$arrUserList = $this->arrUserList;
+$arrCategoryList = $this->arrCategoryList;
+?>
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="icon-time"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Lỗi!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-category')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Hoàn tất!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            Danh sách Bài đăng
+        </header>
+        <div class="panel-body">
+            <div class="adv-table editable-table ">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                        <div id="editable-sample_length" class="dataTables_length no-padding">
+                            <a class="btn btn-primary"
+                               href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'add')); ?>"><i
+                                    class="icon-plus-sign-alt"></i> Thêm</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <form id="frm" class="form-horizontal" role="form" method="GET">
+                            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-4 no-padding-right">
+                                <button type="submit" class="btn btn-white per-100"><i class="icon-search"></i> Tìm kiếm
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <section id="unseen">
+                    <table class="table table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                        <tr>
+                            <th class="text-center"><i class="icon-list"></i> ID</th>
+                            <th class="text-center"><i class="icon-file-alt"></i> Tiêu đề bài viết</th>
+                            <th class="text-center"><i class="icon-file-alt"></i> Views</th>
+                            <th class="text-center"><i class="icon-sort-by-alphabet"></i> Thuộc danh mục</th>
+                            <th class="text-center"><i class="icon-calendar"></i> Ngày tạo</th>
+                            <th class="text-center"><i class="icon-user"></i> Người tạo</th>
+                            <th class="text-center"><i class="icon-check"></i> Trạng thái</th>
+                            <th class="text-center"><i class="icon-edit"></i> Chức năng</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        if (!empty($arrContentList)):
+                            foreach ($arrContentList as $arrContent):
+                                ?>
+                                <tr>
+                                    <td class="text-center" width="80">
+                                        <?php echo $arrContent['cont_id']; ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'content', 'action' => 'edit', 'id' => $arrContent['cont_id'])); ?>">
+                                            <b><?php echo $arrContent['cont_title']; ?></b>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php echo number_format($arrContent['cont_views']); ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php echo $arrCategoryList[$arrContent['cate_id']]['cate_name']; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php echo date('d/m/Y', $arrContent['created_date']); ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php echo $arrUserList[$arrContent['user_created']]['user_name']; ?>
+                                    </td>
+                                    <td class="text-center" width="100">
+                                        <?php echo $arrContent['cont_status'] ? '<a href="javascript:;" class="tooltips" data-placement="top" data-original-title="Hoạt động"><i class="icon-ok color-success"></i></a>' : ' <a href="javascript:;" class="tooltips" data-placement="top" data-original-title="Đã khóa"><i class="icon-minus-sign color-danger"></i></a>'; ?>
+                                    </td>
+                                    <td class="text-center" width="100">
+                                        <a class="btn btn-danger btn-xs remove" data-toggle="tooltip" title="Xóa"
+                                           rel="<?php echo $arrContent['cont_id']; ?>"><i class="icon-trash "></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7" class="text-center">Hiện tại chưa có bài đăng nào.</td>
+                            </tr>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <div>
+                <?php echo $this->paging; ?>
+            </div>
+        </div>
+    </section>
+</section>
+<script type="text/javascript">
+    Content.index();
+</script>

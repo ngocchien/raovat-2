@@ -1,0 +1,22 @@
+<div class="container">
+    <form class="form-signin" method="POST">
+        <h2 class="form-signin-heading">đăng nhập quản trị</h2>
+        <?php
+        if ($this->error):
+            ?>
+            <div class="alert alert-danger alert-block" style="margin: 0 auto;width:330px;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;">              
+                <p style="font-size:13px;color:#A94442;text-align:center"><?php echo current($this->error); ?></p>
+            </div>
+        <?php endif; ?>
+        <div class="login-wrap">
+            <input type="text" name="email" class="form-control" placeholder="Email" autofocus="autofocus">
+            <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
+            <label class="checkbox">
+                <input type="checkbox" value="1" name="remember"> Tự động đăng nhập lần sau
+            </label>
+            <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
+        </div>
+    </form>
+</div>
+
+

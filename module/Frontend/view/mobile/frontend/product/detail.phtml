@@ -1,0 +1,147 @@
+<?php // p($this->arrDetaiProduct);die;?>
+<script>
+    var addcartURL = '<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'add-product-cart')); ?>';
+    var advisoryURL = '<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'advisory')); ?>';
+</script>
+<?php
+$arrSilder = array();
+if (!empty($this->arrDetaiProduct['prod_image_sub'])) {
+    foreach (json_decode($this->arrDetaiProduct['prod_image_sub']) as $key => $value) {
+        $arrSilder[] = json_decode($value, true);
+    }
+}
+$arrPropertiesParentList = array();
+foreach ($this->arrPropertiesParentList as $key => $value) {
+    $arrPropertiesParentList[$value['prop_id']] = $value;
+}
+?>
+<div id="brcmb">
+    <?php
+    if (!empty($this->arrCateInProduct)):
+        foreach ($this->arrCateInProduct as $key => $value):
+            ?>
+            <a href="<?php echo $this->serverUrl() . $this->Url('category', array('controller' => 'category', 'action' => 'index', 'categorySlug' => $value["cate_slug"], 'categoryID' => $value["cate_id"])) ?>"><span><?php echo $value['cate_name']; ?></span></a> > 
+            <?php
+        endforeach;
+    endif;
+    ?>
+    <a href="<?php echo $this->serverUrl() . $this->Url('category', array('controller' => 'category', 'action' => 'index', 'categorySlug' => $this->mainCategory["cate_slug"], 'categoryID' => $this->mainCategory["cate_id"])) ?>"><span><?php echo $this->mainCategory['cate_name']; ?></span></a> > 
+    <span><?php echo $this->arrDetaiProduct['prod_name']; ?></span>
+</div>
+<div id="cont">            
+    <div class="dt-pro">
+        <?php if (!empty($arrSilder)): ?>
+            <div class="img">
+                <!-- Swiper -->
+                <div class="swslider-cont gallery-top">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($arrSilder as $key => $value): ?>
+                            <div class="swiper-slide" style="background-image:url(<?php echo $value['thumbImage']['224x224']; ?>);"></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                </div>
+
+                <div class="swslider-cont gallery-thumbs">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($arrSilder as $key => $value):
+                            ?>
+                            <div class="swiper-slide" style="background-image:url(<?php echo $value['thumbImage']['83x83']; ?>)"></div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="hedr">
+            <div class="h">
+                <h1>
+                    <?php echo $this->arrDetaiProduct['prod_name']; ?>
+                </h1>
+                <?php if ($this->arrDetaiProduct['prod_call_price'] == 1): ?>
+                    <div class="cr-price">Liên hệ để biết giá</div>
+                    <?php
+                else:
+                    if ($this->arrDetaiProduct['prod_is_promotion'] == 1):
+                        ?>
+                        <div class="op-price"><?php echo number_format($this->arrDetaiProduct['prod_price'], 0, ",", "."); ?> Vnđ</div>
+                    <?php endif; ?>
+                    <div class="cr-price"><?php echo ($this->arrDetaiProduct['prod_is_promotion'] == 1) ? number_format($this->arrDetaiProduct['prod_promotion_price'], 0, ",", ".") : number_format($this->arrDetaiProduct['prod_price'], 0, ",", ".") ?> Vnđ</div>
+                <?php endif; ?>
+            </div>
+            <?php if ($this->arrDetaiProduct['prod_call_price'] == 0): ?>
+                <div class="button"><button class="btbuy" rel="<?php echo $this->arrDetaiProduct['prod_id'] ?>">Đặt Mua</button></div>
+            <?php endif; ?>
+            <div class="dd">
+                <div class="l f-l">
+                    <div class="if bor">
+                        <ul>
+                            <?php if (!empty($this->arrDetailBrand)): ?>
+                                <li>Thương hiệu : <strong><?php echo $this->arrDetailBrand['cate_name']; ?></strong></li>
+                            <?php endif; ?>
+                            <li>Mã sản phẩm : <strong>MG<?php echo $this->arrDetaiProduct['prod_id']; ?></strong></li>
+                            <?php
+                            if (count($this->arrPropertiesList) > 0) :
+                                foreach ($this->arrPropertiesList as $key => $value):
+                                    ?>
+                                    <li><?php echo $arrPropertiesParentList[$value['prop_parent']]['prop_name'] . ' : '; ?><strong><?php echo $value['prop_name']; ?></strong></li>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="sp bor">
+                        <div>Gọi tư vấn: <span class="cr-red"><?php echo HOTLINE_NUMBER ?></span></div>
+                        <div>Hoặc để lại <span  class="cr-red">SĐT</span> Chuyên Viên Tư Vấn sẽ gọi lại ngay cho bạn</div>
+                        <div class="ip-data">
+                            <input class="input phoneadvisory" value=""/>
+                            <button class="send advisory" rel="<?php echo $this->arrDetaiProduct['prod_id']; ?>" >Gửi</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="r f-r">
+                    <div class="bor">
+                        <div class="note">
+                            <ul>
+                                <li><span class="icon i-checked"></span> Cam kết hàng chính hãng</li>
+                                <li><span class="icon i-checked"></span> Đổi trả hàng trong 14 ngày</li>
+                                <li><span class="icon i-checked"></span> Bảo hiểm giao dịch</li>
+                                <li><span class="icon i-checked"></span> Đổi trả hàng trong 14 ngày</li>
+                                <li><span class="icon i-checked"></span> Bảo hiểm giao dịch</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="dt-p">
+                <div class="tt"><?php echo $this->arrDetaiProduct['prod_name']; ?></div>
+                <?php echo $this->arrDetaiProduct['prod_detail']; ?>
+                <div class="tt">Thông Tin Thương Hiệu</div>
+                Thương hiệu : <?php echo $this->arrDetailBrand['cate_name']; ?>
+                <?php echo $this->arrDetailBrand['cate_description']; ?>
+            </div>
+        </div>
+        <?php if($this->arrProductTagsList):?>
+        <div class="box">
+            <div class="tt">
+                Sản phẩm cùng loại  
+            </div>
+            <div class="sld">
+                <div class="sw-cont">
+                    <div class="swiper-wrapper">
+                        <?php foreach($this->arrProductTagsList as $key=>$value):?>
+                        <div class="swiper-slide"><a href="<?php echo $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail', 'productslug' => $value["prod_slug"], 'productId' => $value["prod_id"])) ?>"><img title="<?php echo $value['prod_name'];?>" src="<?php echo json_decode($value['prod_image'],true)['thumbImage']['120x120'];?>" style="width: 100%"/></a></div>
+                        <?php endforeach;?>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+    </div>
+</div>

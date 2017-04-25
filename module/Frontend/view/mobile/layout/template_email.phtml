@@ -1,0 +1,103 @@
+<?php
+$arrProductListCookie = $this->arrProductListCookie;
+$listProductCart = $this->listProductCart;
+$orderDetail = $this->orderDetail;
+$inResult = $this->inResult;
+$totalPrice = $this->totalPrice;
+$i = 0;
+foreach ($listProductCart as $key => $value) :
+    $i++;
+    $urlProduct = $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail', 'productslug' => $value["prod_slug"], 'productId' => $value['prod_id']));
+    $priceProduct = ($value['prod_is_promotion'] == 1) ? $value['prod_promotion_price'] : $value['prod_price'];
+    $totalPriceProduct = ($value['prod_is_promotion'] == 1) ? $arrProductListCookie[$value['prod_id']]['quantity'] * $value['prod_promotion_price'] : $arrProductListCookie[$value['prod_id']]['quantity'] * $value['prod_price'];
+    $name .= '<tr >
+            <td style="border: 1px solid #cccccc; border-top: 0px; border-right: 0px;padding: 10px 0px; text-align: center;">' . $i . '</td>
+            <td style="border: 1px solid #cccccc;  border-top: 0px; border-right: 0px; padding: 10px 5px; text-align: justify "><a href="' . $urlProduct . '" style="color:#3bace1; text-decoration: none;">' . $value['prod_name'] . '</a></td>
+            <td style="border: 1px solid #cccccc;  border-top: 0px; border-right: 0px; padding: 10px 0px; text-align: center;">' . number_format($priceProduct) . ' VNĐ</td>
+            <td style="border: 1px solid #cccccc;  border-top: 0px; border-right: 0px; padding: 10px 0px; text-align: center;">' . $arrProductListCookie[$value['prod_id']]['quantity'] . '</td>
+            <td style="border: 1px solid #cccccc;  border-top: 0px; padding: 10px 0px; text-align: center;">' . number_format($totalPriceProduct) . ' VNĐ</td>
+        </tr>';
+endforeach;
+?>
+
+<div style="background: #e3f5ff; margin: 0 auto;">
+    <table  cellspacing="0" cellpadding="0" width="700px" align="center" valign="middle" style="background: #ffffff; border: 1px solid #37c3ff; padding: 10px 10px;" >
+        <tbody>
+            <tr>
+                <td align="center" colspan="2"><img src="<?php echo STATIC_URL.'/f/v1/images/logo-email.png'?>"></td>
+            </tr>
+            <tr style="overflow: hidden;">
+                <td style="color: #3bace1; padding-top: 10px; "><strong>Xác nhận đặt hàng thành công</strong></td>
+                <td style="color: #3bace1; padding-top: 10px; "><strong>Thông tin khách hàng</strong></td>
+            </tr>
+            <tr>
+                <td style="width: 60%">
+                    <table cellspacing="0" cellpadding="0"  align="center" valign="middle" style="line-height: 20px; font-size: 13px; padding-right: 30px; text-align: justify;">
+                        <tr><td  style="padding-top: 5px;">Kính chào <b><?php echo $orderDetail['fullname'] ?></b></td></tr>
+                        <tr><td  style="padding-top: 5px;">Megavita.Vn xác nhận đơn hàng của Quý khách và đang xử lý để giao hàng cho Quý khách trong thời gian từ 1-3 ngày làm việc. CSKH sẽ gọi lại cho quý khách để xác nhận lại đơn hàng!</td></tr>
+                        <tr><td  style="padding-top: 5px;">Mã đơn hàng: MG<?php echo '00'.$inResult; ?></td></tr>
+                        <tr><td style="padding-top: 5px;">Tình trạng: chưa thanh toán</td></tr>
+                    </table>
+                </td>
+                <td style="width: 40%">
+                    <table cellspacing="0" cellpadding="0"  align="center" valign="middle" style=" width: 271px; border: 1px solid #cccccc; padding: 8px 5px; line-height: 20px; font-size: 13px; border-radius: 5px;">
+                        <tr><td style="width: 25px;">Họ tên:</td><td><b><?php echo $orderDetail['fullname'];?></b></td></tr>
+                        <tr><td style="width: 25px;">MKH:</td><td>MG<?php echo '00'.$inResult; ?></td></tr>
+                        <tr><td style="width: 25px;">Email:</td><td><?php echo $orderDetail['email'] ?></td></tr>
+                        <tr><td style="width: 25px;">Mobile:</td><td><?php echo $orderDetail['phone'] ?></td></tr>
+                        <tr><td  style="width: 53px; vertical-align:top;">Địa chỉ: </td>
+                            <td><?php echo $orderDetail['address'] ?></td></tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td style="padding-top: 5px;"><a href="<?php echo $this->serverUrl() . $this->Url('ordertracking', array('controller' => 'ordertracking', 'action' => 'view', 'id' => 'MG'.sprintf("%03d", $inResult), 'email' => $orderDetail['email']))?>" style="color: #0069e0; font-size: 13px; ">Bấm vào đây để xem tình trạng đơn hàng</a></td></tr>
+            <tr><td colspan="2" style="color: #3bace1; padding-top: 10px;"><strong>Thông tin đơn hàng</strong></td></tr>
+            <tr>
+                <td colspan="2">
+                    <table  cellspacing="0" cellpadding="0" width="700px" align="center" valign="middle" style="background: #ffffff;  padding: 10px 10px; font-size: 13px;">
+                        <tr >
+                            <td style="border: 1px solid #cccccc; border-right: 0px; padding: 10px 0px; width: 5%; text-align: center;">STT</td>
+                            <td style="border: 1px solid #cccccc; border-right: 0px; padding: 10px 0px; width: 55%; text-align: center;">Sản phẩm</td>
+                            <td style="border: 1px solid #cccccc; border-right: 0px; padding: 10px 0px; width: 15%; text-align: center;">Giá</td>
+                            <td style="border: 1px solid #cccccc; border-right: 0px; padding: 10px 0px;width: 10%; text-align: center;">Số lượng</td>
+                            <td style="border: 1px solid #cccccc; padding: 10px 0px;  text-align: center; width: 15%;">Thành tiền</td>
+                        </tr>
+                        <?php echo $name; ?>
+                        <tr >
+                            <td colspan="4" style="border: 1px solid #cccccc;  border-top: 0px; border-bottom: 0px; border-right: 0px; padding: 10px 0px; text-align: right;"><strong>Chi phí đơn hàng:</strong>
+                            </td>
+                            <td style="border: 1px solid #cccccc;  border-top: 0px;  border-left: 0px;border-bottom: 0px; padding: 10px 0px; text-align: center;"><strong><?php echo number_format($totalOrder); ?> VNĐ</strong></td>
+                        </tr>
+                        <tr >
+                            <td colspan="4" style="border: 1px solid #cccccc;  border-top: 0px; border-right: 0px; padding: 10px 0px; text-align: right; color: #F00;"><strong>Tổng tiền:</strong></td>
+                            <td style="border: 1px solid #cccccc;  border-top: 0px;  border-left: 0px; padding: 10px 0px; text-align: center; color: #F00;"><strong><?php echo number_format($totalPrice); ?> VNĐ</strong></td>
+                        </tr>
+                        <tr >
+                            <td colspan="5" style="border: 1px solid #cccccc;  border-top: 0px;   padding: 10px 5px; text-align: right;">(Đã bao gồm VAT trong giá bán sản phẩm)
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="background: #e3f5ff;">
+                <td colspan="2" style="font-size: 13px;padding: 10px 10px; border-radius: 5px; line-height: 20px; ">Ngoài hình thức thanh toán và giao hàng tận nơi, Quý khách có thể đến văn phòng giao dịch của <strong>Megavita</strong> để thanh toán tại địa chỉ:
+                    <br/><strong>61C Tú Xương, Phường 7, Quận 3, TP.HCM </strong> - (08) 3602 7944 - 0908897041<br/>
+                    Hoặc quý khách có thể  <a target="_bank" href="http://baokim.vn" style="text-decoration: none; color: #0069e0;">thanh toán qua Bảo Kim</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 13px;padding: 0px 10px; border-radius: 5px; line-height: 20px; ">Nếu quý khách cần hỗ trợ, vui lòng gọi  <span style="color:#f00; font-weight: bold; font-size: 15px;">0908897041</span> hoặc gửi email đến: <span style="color:#0f72e2">megavita@gmail.com</span>.<br/>Cảm ơn Quý khách đã mua sắm trên megavita.vn !.</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 13px;padding: 10px 10px; border-radius: 5px; line-height: 20px; color: #888888; ">(*) Đây là email hệ thống gửi tự động, vui lòng không trả lời (reply) lại email này.</td>
+            </tr>
+            <tr>
+                <td colspan="2"  style="padding: 30px 10px;"><img src="<?php echo STATIC_URL.'/f/v1/images/line.png'?>" alt=""/></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 20px;padding: 20px 10px; border-radius: 5px; line-height: 20px; color: #3bace1; font-weight: bold; text-align: center; ">Megavita.Vn - SIÊU THỊ KHỎE VÀ ĐẸP ONLINE !</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

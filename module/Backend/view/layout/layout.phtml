@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php
+        echo $this->headTitle()->setAutoEscape(false);
+        echo $this->headMeta();
+        echo $this->headLink();
+        ?>
+        <?php echo $this->headScript();?>
+
+        <script type="text/javascript">
+            var baseurl = '<?php echo $this->serverUrl(); ?>';
+            var module = '<?php echo MODULE; ?>';
+            var staticurl = '<?php echo STATIC_URL; ?>';
+            var fullname = '<?php echo FULLNAME; ?>';
+            var role = '<?php echo USER_ROLE; ?>';
+        </script>
+
+    </head>
+    <body class="full-width">
+        <section id="container">
+            <?php
+            echo $this->render('backend/header');
+            echo $this->layout()->content;
+            ?>
+            <footer class="site-footer">
+                <div class="text-center">
+                    2016 &copy; BESTQUYNHON.COM
+                    <a href="#" class="go-top">
+                        <i class="icon-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
+        </section>
+    </body>
+</html>

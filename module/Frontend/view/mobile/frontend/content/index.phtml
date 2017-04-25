@@ -1,0 +1,85 @@
+<?php
+$arrDetailCategory = $this->arrDetailCategory;
+$arrContentList = $this->arrContentList;
+?>
+<div id="brcmb">
+    <?php foreach ($this->arrCateGradeList as $key => $value) :
+        ?>
+    <a  href="<?php echo $this->serverUrl() . $this->Url('content', array('controller' => 'content', 'action' => 'index', 'categorySlug' => $value['cate_slug'], 'categoryID' => $value['cate_id'])) ?>">
+            <span ><?php echo $value['cate_name']; ?></span>
+        </a> > 
+    <?php endforeach; ?>
+
+</div>
+<div id="cont">           
+    <?php if (!empty($this->arrCategoryListChild)):
+        ?>
+        <div class="ls-cat">               
+            <div class="ls">
+                <ul>
+                    <?php
+                    foreach ($this->arrCategoryListChild as $key => $value):
+                        if ($value['cate_id'] != $arrDetailCategory['cate_id']):
+                            ?>
+                            <li><a class="cr-bl" href="<?php echo $this->serverUrl() . $this->Url('content', array('controller' => 'content', 'action' => 'index', 'categorySlug' => $value['cate_slug'], 'categoryID' => $value['cate_id'])) ?>"><?php echo $value['cate_name']; ?></a></li>
+                        <?php endif;
+                    endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($this->arrProductList)): ?>
+    <div class="box">
+        <div class="tt">
+            Bài viết hót trong  danh mục
+        </div>
+            <div class="sld">
+                <div class="sw-cont">
+                    <div class="swiper-wrapper">
+                        <?php
+                        foreach ($this->arrProductList as $key => $value):
+                            ?>
+                            <div class="swiper-slide"><a class="cr-bl"  href="<?php echo $this->serverUrl() . $this->Url('product', array('controller' => 'product', 'action' => 'detail', 'productslug' => $value['prod_slug'], 'productId' => $value['prod_id'])) ?>"><img src="<?php echo json_decode($value['prod_image'], true)['thumbImage']['83x83'] ?>" title="<?php echo $value['prod_name']; ?>" style="width: 100%"/></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+    </div>
+    <?php endif;
+//    p(count($arrContentList));die;
+    ?>
+    <?php if(!empty($arrContentList)):?>
+    <div class="ls-pro">
+        <div class="tt">
+            Bài viết trong danh mục
+        </div>
+            <div class="ls">
+                <ul>
+                    <?php foreach($arrContentList as $key=>$value):
+                        ?>
+                        <li style="overflow:hidden">
+                            <div class="f-l img">
+                                <img src="<?php echo json_decode($value['cont_image'],true)['thumbImage']['224x224']?>"/>
+                            </div>
+                            <div class="inf">
+                                <div  class="tt"><a class="cr-bl"  href="<?php echo $this->serverUrl() . $this->Url('content_detail', array('controller' => 'content', 'action' => 'view', 'contslug' => $value['cont_slug'], 'contId' => $value['cont_id'])) ?>"><?php echo ucfirst($value['cont_title']);?></a></div>
+                                <div ><?php echo $value['cont_summary'];?></div>
+                            </div>
+                            <div class="clear"></div>
+                        </li>  
+                    <?php endforeach;?>
+                </ul>
+            </div>
+    </div>
+    <?php if ($this->countPage > 1): 
+                    if($this->intPage < $this->countPage):?>
+            <div class="button"><a href="<?php echo $this->serverUrl() . $this->Url('content', array('controller' => 'content', 'action' => 'index', 'categorySlug' => $this->arrDetailCategory['cate_slug'], 'categoryID' => $this->arrDetailCategory['cate_id'],'page'=>($this->intPage+1))) ?>"><button class="readmore">Xem Thêm</button><a></div>
+                    <?php endif;
+                    if($this->intPage > 1):?>
+                        <div class="button"><a href="<?php echo $this->serverUrl() . $this->Url('content', array('controller' => 'content', 'action' => 'index', 'categorySlug' => $this->arrDetailCategory['cate_slug'], 'categoryID' => $this->arrDetailCategory['cate_id'],'page'=>($this->intPage-1))) ?>"><button class="back bt-default">Trở Về</button></a></div>
+                    <?php endif;?>
+            <?php endif; ?>
+    <?php endif;?>
+</div>

@@ -1,0 +1,30 @@
+<div id="brcmb">
+    <a href="#"><span>STEP -TWO</span></a>
+</div>
+<div id="cont">  
+    <form method="POST" >
+        <div class="ls-pro">               
+            <div class="step-one">
+                <div class="chil2">
+                    <div style="width: 90%; margin: 20px auto">
+                        <b>Địa chỉ nhận hàng </b><br/>
+                        <div style="width: 90%; margin: 20px auto">
+
+                            <input class="input" type="text" name="strFullname" placeholder="Họ và tên" value="<?php echo ($params['strFullname']) ? $params['strFullname'] : ((UID) ? FULLNAME : NULL) ?>">
+                            <label style="color: red; display: <?php echo ($this->errors['fullname']) ? : none ?>;" class="error errorCheckoutFullName"><?php if($this->errors['fullname']){echo $this->errors['fullname']; }?></label>
+                            <input class="input" type="text" name="strEmail" placeholder="Email" value="<?php echo ($params['strEmail']) ? $params['strEmail'] : ((UID) ? EMAIL : NULL) ?>">
+                            <label style="color: red; display: <?php echo ($this->errors['Email']) ? : none ?>;" class="error errorCheckoutEmail"><?php if($this->errors['Email']){echo $this->errors['Email']; }?></label>
+                            <input class="input" type="text" name="strAddress" placeholder="Địa chỉ" value="<?php echo ($params['strAddress']) ? $params['strAddress'] : ((UID) ? ADDRESS . ',' : NULL) ?><?php echo ($params['strAddress']) ? $params['strAddress'] : ((DISTRICT_ID) ? $arrDistrict['dist_name'] . ',' : NULL) ?><?php echo ($params['strAddress']) ? $params['strAddress'] : ((CITY_ID) ? $arrCity['city_name'] : NULL) ?>">
+                            <label style="color: red; display: <?php echo ($this->errors['address']) ? : none ?>;" class="error errorCheckoutAddress"><?php if($this->errors['address']){echo $this->errors['address']; }?></label>
+                            <span style="color: activecaption; margin-left:0px">(Lưu ý: Nhập đầy đủ số nhà, tên đường, quận/huyện, phường xã)</span>
+                            <input class="input" type="text" name="strPhone" placeholder="Số điện thoại" value="<?php echo ($params['strPhone']) ? $params['strPhone'] : ((UID) ? PHONE : NULL) ?>" />
+                            <label style="color: red; display: <?php echo ($this->errors['phoneNumber']) ? : none ?>;" class="errornumber errorCheckoutPhone"><?php if($this->errors['phoneNumber']){echo $this->errors['phoneNumber']; }?></label>
+                            <textarea name="strNote" class="input" rows="3" placeholder="Nhập ghi chú nếu quý khách có nhu cầu hẹn giờ nhận hàng"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button"><button class="readmore">Đặt hàng</button></div>
+        </div>
+    </form>
+</div>

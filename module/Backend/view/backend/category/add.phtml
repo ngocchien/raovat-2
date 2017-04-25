@@ -1,0 +1,120 @@
+<section class="wrapper site-min-height">
+    <?php if ($this->errors): ?>
+        <div class="alert alert-block alert-danger fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-times-sign"></i> Error!</h4>
+            <?php foreach ($this->errors as $error): ?>
+                <p> - <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $successMessage = array_merge($this->flashMessenger()->setNamespace('success-add-group')->getMessages());
+    if ($successMessage):
+        ?>
+        <div class="alert alert-success alert-block fade in">
+            <button class="close close-sm" type="button" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
+            <h4><i class="fa fa-ok-sign"></i> Completed!</h4>
+            <p>- <?php echo current($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <section class="panel panel-primary">
+        <header class="panel-heading">ADD CATEGORY</header>
+        <div class="panel-body">
+
+            <form id="frm" class="form-horizontal tasi-form"  method="POST">
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_name">Category Name <span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="cate_name" name="cate_name" class="form-control" type="text" placeholder="Please import category name" value="<?php echo $this->params['cate_name'] ? $this->params['cate_name'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Choose parent category</label>
+                    <div class="col-lg-5">
+                        <select name="parent_id" class="form-control parent_id">
+                            <option value="0" <?php if (empty($this->params['parent_id'])): ?> selected="selected"<?php endif; ?>>Choose parent category</option>
+                            <?php
+                            if (!empty($this->arrCategoryParent)):
+                                foreach ($this->arrCategoryParent as $arrParent):
+                                    ?>
+                                    <option value="<?php echo $arrParent['cate_id']; ?>" <?php echo (!empty($this->params['parent_id']) && $this->params['parent_id'] == $arrParent['cate_id']) ? 'selected' : ''; ?>><?php echo $arrParent['cate_name']; ?></option>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group select-icon">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_icon">Icon for category<span style="color:red">*</span></label>
+                    <div class="col-lg-5">
+                        <input id="cate_name" name="cate_icon" class="form-control" type="file" placeholder="Icon for category" value="<?php echo $this->params['cate_icon'] ? $this->params['cate_icon'] : ''; ?>">
+                    </div>
+
+                    <div class="col-lg-5">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('backend', array('controller' => 'category', 'action' => 'change-icon')); ?>" target="_blank"> <b> <i class=" icon-hand-right"></i>click here for change icon <i class="icon-hand-left"></i></b></a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_sort">Sort</label>
+                    <div class="col-lg-5">
+                        <input id="cate_sort" name="cate_sort" class="form-control" type="text" placeholder="import sort" value="<?php echo $this->params['cate_sort'] ? $this->params['cate_sort'] : ''; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_meta_title">SEO Meta title <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <input id="cate_meta_title" name="cate_meta_title" class="form-control" type="text" placeholder="Import meta title for category" value="<?php echo $this->params['cate_meta_title'] ? $this->params['cate_meta_title'] : ''; ?>" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_meta_description">SEO Meta Description <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <textarea id="cate_meta_description" rows="6" name="cate_meta_description" class="form-control editor" placeholder="import meta description for category" ><?php echo ($this->params['cate_meta_description']) ? $this->params['cate_meta_description'] : null; ?></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="cate_meta_keyword">SEO Meta Keyword <span style="color:red">*</span></label>
+                    <div class="col-lg-10">
+                        <input id="cate_meta_keyword" name="cate_meta_keyword" class="form-control" type="text" placeholder="Import meta keyword for category" value="<?php echo $this->params['cate_meta_keyword'] ? $this->params['cate_meta_keyword'] : ''; ?>" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-2 control-label">Status<span style="color:red">*</span></label>
+                    <div class="col-lg-4">
+                        <select name="cate_status" class="form-control">
+                            <option value="1" <?php echo ($this->params['cate_status'] == 1) ? 'selected' : ''; ?>>Display</option>
+                            <option value="0" <?php echo (isset($this->params['cate_status']) && $this->params['cate_status'] == 0) ? 'selected' : ''; ?>>Hidden</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" id="done" class="btn btn-success bt-save"><i class="icon-save"></i> Save</button>  
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </section>
+</section>
+<script type="text/javascript">
+//    Category.add();
+</script>

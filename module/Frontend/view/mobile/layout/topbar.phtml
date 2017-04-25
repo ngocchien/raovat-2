@@ -1,0 +1,55 @@
+<?php
+if (isset($_COOKIE['cookieCart'])) {
+    $arrTotalProductList = unserialize($_COOKIE['cookieCart']);
+    $totalProduct = 0;
+    foreach ($arrTotalProductList as $keyProduct => $valueProduct) {
+        $totalProduct = $totalProduct + $valueProduct['quantity'];
+    }
+}
+?>
+<div id="hder">
+    <div class="br">
+        <form action="<?php echo $this->serverUrl() . $this->Url('frontend-search', array('controller' => 'search', 'action' => 'index')) ?>" method="GET">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="bor-2-r">
+                        <div class="ic ic-mn">
+
+                        </div>
+                    </td>
+                    <td width="100%">
+                        <div class="search">
+                            <input type="text" name="s"  value="" placeholder="Tìm kiếm"/>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="submit"  class="ic ic-sch" value="" ></button>
+                        </div>
+                    </td>
+                    <td class="bor-2-l">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('frontend-order', array('controller' => 'order', 'action' => 'view-cart'))?>"><div class="ic ic-crt">
+                                <div class="n-cart"><?php echo count($arrTotalProductList); ?></div>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div class="clear"></div>
+    </div>
+    <div class="hsp">
+        <div class="logo">
+            <img src="<?php echo STATIC_URL; ?>/f/mobile/images/logo.png">
+        </div>
+        <div class="spt">
+            <div class="text">
+                <div><strong>HOTLINE</strong></div>
+                <div class="phone cr-red"><img src="<?php echo STATIC_URL; ?>/f/v1/images/phone-hot-line.png"/></div>
+                <div class="note">8-21h kể cả T7&amp;CN</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
